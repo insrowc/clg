@@ -86,7 +86,7 @@
 }
 
 /* For nav box */
-@media screen and (max-width: 980px){
+@media screen and (max-width: 981px){
     .wrapper1{
       display: none;
     }
