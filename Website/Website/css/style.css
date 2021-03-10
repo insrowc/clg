@@ -51,6 +51,7 @@
 
 .site-main .site-banner {
     background: url(../img/images/p5.png) no-repeat 100% 100%;
+    background-attachment: fixed;
 }
 
 .site-main .site-banner .site-title h3{
