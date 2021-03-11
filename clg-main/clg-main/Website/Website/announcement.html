@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Announcement</title>
+    <link
+      rel="shartcut icon"
+      type="image/x-icon"
+      href="/img/images/Group.png"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl"
+      crossorigin="anonymous"
+    />
+    <!--  Bootstrap css file  -->
+    <link
+      rel="stylesheet"
+      href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="./css/all.min.css" />
+    <style>
+      body {
+        min-height: 100vh;
+        width: 100%;
+        background-color: #fd7e14;
+      }
+      .card {
+        width: 300px;
+      }
+      .fa-comment {
+        cursor: pointer;
+      }
+      .modal-content {
+        height: 90vh;
+        overflow-y: auto;
+        padding-bottom: 3rem;
+      }
+      .modal-footer {
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        background-color: white;
+      }
+    </style>
+      <!-- custom script for announcements -->
+    
+  </head>
+  <body class="pt-5">
+    <div class="p-3 m-auto">
+      <h2 class="text-white">Upload new post</h2>
+      <!-- adding new posts -->
+      <form
+        id="postform"
+        action="/announcement"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <!-- <input type="file" name="photo"> -->
+        <input type="text" id="message" name="message" placeholder="message" />
+        <br />
+        <br />
+        <input
+          type="text"
+          id="username"
+          name="userName"
+          placeholder="userName"
+        />
+        <br />
+        <br />
+        <input
+          type="text"
+          id="collegename"
+          name="collegeName"
+          placeholder="collegeName"
+        />
+        <br />
+        <br />
+        <input type="submit" value="submit" />
+      </form>
+    </div>
+
+    <!-- posts -->
+    {{#each posts}}
+    <div class="card mb-4 m-auto">
+      <div class="card-body">
+        <h5 class="card-title">
+          {{this.userName}} - <small>{{this.collegeName}}</small>
+        </h5>
+        <p class="card-text">{{this.message}}</p>
+        <div class="p-2">
+          <!-- Trigger the modal with a button -->
+          <i
+            type="button"
+            data-toggle="modal"
+            data-target="#{{this._id}}"
+            class="far fa-comment"
+          >
+            {{this.commentsCount}}</i
+          >
+
+          <!-- Modal -->
+          <div class="modal fade" id="{{this._id}}" role="dialog">
+            <div class="modal-dialog">
+              <!-- Modal content-->
+              <div class="modal-content position-relative">
+                <div class="modal-header">
+                  <button type="button" class="close" data-dismiss="modal">
+                    &times;
+                  </button>
+                  <h4 class="modal-title">userName comments</h4>
+                </div>
+                <div class="modal-body">
+                  {{#each this.comments}}
+                  <b>{{this.whoComment}} - </b>
+                  <i>{{this.comment}}</i><br><br>
+                  {{/each}}
+                </div>
+                <div class="modal-footer">
+                  <form class="commentform" action="" onsubmit="return sendComment(event)">
+                    <input type="text" name="comment" id="comment" />
+                    <p id="postid" style="display: none">{{this._id}}</p>
+                    <button type="submit">Send</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {{/each}}
+
+    <script>
+      function sendComment(e) {
+            e.preventDefault();
+            console.log(e.target.childNodes)
+            const postId = e.target.childNodes[3].innerText;
+            const comment = e.target.childNodes[1].value;
+
+            const xhttp = new XMLHttpRequest();
+            xhttp.open("POST", "/comment", true);
+            xhttp.setRequestHeader("Content-Type", "application/json");
+            xhttp.onreadystatechange = () => {
+              e.target.childNodes[1].value = "";
+            };
+
+            const data = {
+              postId: postId,
+              comment: comment,
+            };
+
+            xhttp.send(JSON.stringify(data));
+          };
+      window.onload = () => {
+        // fetching data 
+        // const getData = () => {
+        //   const xhttp = new XMLHttpRequest();
+        //   xhttp.open("GET", "/announcement", true);
+        //   xhttp.send();
+        // }
+        // setInterval(getData, 1000);
+
+        // upload post on form submit
+        document.querySelector("#postform").onsubmit = (e) => {
+          e.preventDefault();
+
+          const message = document.querySelector("#message").value;
+          const userName = document.querySelector("#username").value;
+          const collegeName = document.querySelector("#collegename").value;
+
+          const xhttp = new XMLHttpRequest();
+          xhttp.open("POST", "/announcement", true);
+          xhttp.setRequestHeader("Content-Type", "application/json");
+          xhttp.onreadystatechange = () => {
+            document.querySelector("#message").value = "";
+            document.querySelector("#username").value = "";
+            document.querySelector("#collegename").value = "";
+          };
+
+          const data = {
+            message: message,
+            userName: userName,
+            collegeName: collegeName,
+          };
+
+          xhttp.send(JSON.stringify(data));
+        };
+      };
+    </script>
+    
+  </body>
+</html>
