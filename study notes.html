@@ -40,21 +40,25 @@
             <th>Name</th>
             <th>Date</th>
             <th>Downloads</th>
-            <th>Pages</th>
+            <th>Size</th>
             <th></th>
           </tr>
         </thead>
         <tbody>
+          {{#each notesList}}
           <tr class="priority-200">
-            <td><i class="fas fa-folder"></i>&nbsp; Notes 1</td>
-            <td>dd/mm/yy</td>
-            <td><i class="fas fa-circle"></i>200</td>
-            <td>190</td>
+            <td><i class="fas fa-folder"></i>&nbsp; {{this.originalname}}</td>
+            <td>{{this.uploadedAt}}</td>
+            <td><i class="fas fa-circle"></i>{{this.downloads}}</td>
+            <td>{{this.size}} KB</td>
             <td>
-              <button class="delete"><i class="fas fa-download"></i></i></button>
+              <a href="{{this.destination}}/{{this.filename}}" download="vfindfit">
+              <button type="submit" class="delete"><i onclick="downloadNotes('{{this._id}}')" class="fas fa-download"></i></i></button>
+              </a>
             </td>
           </tr>
-          <tr class="priority-600">
+          {{/each}}
+          <!-- <tr class="priority-600">
             <td><i class="fas fa-folder"></i>&nbsp; Notes 2</td>
             <td>dd/mm/yy</td>
             <td><i class="fas fa-circle"></i>600</td>
@@ -89,12 +93,22 @@
             <td>
               <button class="delete"><i class="fas fa-download"></i></i></button>
             </td>
-          </tr>
+          </tr> -->
         </tbody>
       </table>
-      <button type="submit" class="add-btn"><a class="nav-link" href="upload.html">
+      <button type="submit" class="add-btn"><a class="nav-link" href="/upload">
         <i class="fas fa-plus"></i></a>
       </button>
     </div>
+    <script>
+      const downloadNotes = (id) => {
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "/notes/download", true);
+        xhr.setRequestHeader("Content-Type", "application/json");
+        const data = {id:id};
+        xhr.send(JSON.stringify(data));
+      } 
+    </script>
   </body>
 </html>

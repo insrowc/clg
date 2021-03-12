@@ -8,6 +8,15 @@ const PORT = process.env.PORT || 8000;
 const mongoose = require("mongoose");
 const fs = require("fs");
 
+// built in middleware
+const websitePath = path.join(__dirname, "./");
+app.use(express.urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.static(websitePath));
+app.set("view engine", "hbs");
+app.set("views", websitePath);
+app.set("view engine", "html");
+
 // schemas
 // post schema
 const postSchema = new mongoose.Schema(
@@ -21,10 +30,6 @@ const postSchema = new mongoose.Schema(
       required: true,
     },
     message: String,
-    photo: {
-      data: Buffer,
-      contentType: String,
-    },
     commentsCount: {
       type: Number,
       default: 0,
@@ -34,11 +39,40 @@ const postSchema = new mongoose.Schema(
   { timestamps: true }
 );
 
+// notes schema
+const notesSchema = new mongoose.Schema(
+  {
+    user: String,
+    originalname: String,
+    encoding: String,
+    mimetype: String,
+    destination: String,
+    filename: String,
+    path: String,
+    size: Number,
+    downloads: {
+      type: Number,
+      default: 0
+    },
+    uploadedAt: String
+  },
+  {
+    timestamps: true,
+  }
+);
+
+// notesSchema.virtual("uploadedAt").get(function () {
+//   const date = new Date();
+//   return `${date.getUTCDate()}/${date.getUTCMonth() + 1}/${date.getUTCFullYear()} ${date.getHours()}:${date.getMinutes()}`;
+// });
+
+notesSchema.virtual("ext").get(function () {
+  return this.mimetype.slice(this.mimetype.indexOf("/") + 1);
+});
+
+const NotesModal = new mongoose.model("notes", notesSchema);
 const PostModal = new mongoose.model("posts", postSchema);
 
-module.exports = { PostModal };
-
-// mongodb connection to mongoose
 mongoose.connect(
   process.env.MONGO_URL,
   {
@@ -54,30 +88,46 @@ mongoose.connect(
   }
 );
 
-// paths variables
-const websitePath = path.join(__dirname, "./");
-
-// built in middleware
-app.use(express.urlencoded({ extended: false }));
-app.use(express.json());
-app.use(express.static(websitePath));
-app.set("view engine", "hbs");
-app.set("views", websitePath);
-app.set("view engine", "html");
 app.engine("html", require("hbs").__express);
 
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
+var storage = multer.diskStorage({
+  destination: function (req, file, cb) {
+    cb(null, "./upload");
   },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
+  filename: function (req, file, cb) {
+    cb(null, file.originalname);
   },
 });
 
-const upload = multer({ storage: storage });
+let extError = "";
 
-// routes
+function checkFileType(file, cb) {
+  const filetypes = /jpeg|pdf|docx|jpg|png|doc|zip/;
+  const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
+  const mimetype = filetypes.test(file.mimetype);
+
+  if (mimetype && extname) {
+    return cb(null, true);
+  } else {
+    extError = "Error: format support only jpeg, pdf, docx, jpg, png";
+  }
+}
+
+var upload = multer({
+  storage: storage,
+  fileFilter: function (_req, file, cb) {
+    checkFileType(file, cb);
+  },
+});
+
+const bytesToKB = (arr) => {
+  arr.forEach((item) => {
+    item.size = item.size / 1000;
+  });
+
+  return arr;
+};
+
 app.get("/", (req, res) => {
   res.render("index");
 });
@@ -92,9 +142,9 @@ app.get("/announcement", (req, res) => {
   });
 });
 
-app.post("/announcement", upload.single("image"), (req, res) => {
+app.post("/announcement", (req, res) => {
   // get data from url while submitting form
-  const { userName, message, collegeName, photo } = req.body;
+  const { userName, message, collegeName } = req.body;
 
   if (userName !== "" && collegeName !== "") {
     //   creating new document
@@ -150,6 +200,69 @@ app.post("/comment", async (req, res) => {
   );
 });
 
+app.get("/studynotes", (req, res) => {
+  NotesModal.find({}, (err, result) => {
+    result = bytesToKB(result);
+    res.render("study notes", { notesList: result });
+  });
+});
+
+app.get("/upload", (req, res) => {
+  NotesModal.find({}, (err, result) => {
+    result = bytesToKB(result);
+    res.render("upload", { notesList: result });
+  });
+});
+
+app.post("/upload/notes", upload.single("notes"), (req, res) => {
+  try {
+    const {
+      fieldname,
+      originalname,
+      encoding,
+      mimetype,
+      destination,
+      filename,
+      path,
+      size,
+    } = req.file;
+    const user = "loggedinuser";
+    const date = new Date();
+    const uploadedAt = `${date.getUTCDate()}/${date.getUTCMonth() + 1}/${date.getUTCFullYear()} ${date.getHours()}:${date.getMinutes()}`
+
+    const notes = new NotesModal({
+      user,
+      fieldname,
+      originalname,
+      encoding,
+      mimetype,
+      destination,
+      filename,
+      path,
+      size,
+      uploadedAt
+    });
+
+    notes.save((err) => {
+      if (err) alert("Something wrong while uploading your post");
+      res.redirect("/upload");
+    });
+  } catch (err) {
+    res.send(400);
+  }
+});
+
+app.post("/notes/download", (req, res) => {
+  const { id } = req.body;
+
+  NotesModal.findById(id, (err, note) => {
+    if(err) res.redirect("/");
+    note.downloads  += 1;
+    note.save();
+  });
+});
+
 app.listen(PORT, () => {
   console.log("Listening at " + PORT);
 });
+  
