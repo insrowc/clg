@@ -9,8 +9,8 @@
     <div class="wrapper">
       <div class="title">UPLOAD NOTES</div>
       <div class="file_upload_list">
-        <ul>
-		  {{#each notesList}}
+        <!-- <ul>
+          {{#each notesList}}
           <li>
             <div class="file_item">
               <div class="format">
@@ -25,24 +25,49 @@
                   </div>
                 </div>
                 <div class="progress">
-                  <div class="inner_progress" style="width: 90%"></div>
+                  <div class="inner_progress" style="width: 100%"></div>
                 </div>
               </div>
             </div>
           </li>
-		  {{/each}}
-        </ul>
+          {{/each}}
+        </ul> -->
       </div>
       <form action="/upload/notes" method="POST" enctype="multipart/form-data">
         <div class="choose_file">
-          <label for="choose_file">
-            <input type="file" id="choose_file" name="notes" />
+          <label id="drag-area" for="choose_file">
+            <input type="file" id="choose_file" name="notes" required />
+            <input hidden type="text" value="{{filename}}" name="fileName" />
+            <input hidden type="text" value="{{filepages}}" name="filepages" />
+            <span>Drag & Drop</span>
+            <span>OR</span>
             <span>Choose Files</span>
           </label>
         </div>
-		<button type="submit">Submit</button>
+        <button style="display: inline-block; padding: 1rem 2rem" type="submit">
+          Submit
+        </button>
       </form>
-	  {{extError}}
+      {{extError}}
     </div>
+    <script>
+      window.onload = () => {
+        const dragArea = document.querySelector("#drag-area");
+        const chooseFile = document.querySelector("#choose_file");
+
+        dragArea.addEventListener("dragover", (event) => {
+          event.preventDefault();
+        });
+
+        dragArea.addEventListener("drop", (event) => {
+          event.preventDefault();
+          if(event.dataTransfer.files.length === 1) {
+            chooseFile.files = event.dataTransfer.files;
+          } else {
+            alert("Please select Only one file");
+          }
+        });
+      };
+    </script>
   </body>
 </html>

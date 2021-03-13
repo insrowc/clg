@@ -10,14 +10,13 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "dialogs": "^2.0.1",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "hbs": "^4.1.1",
-    "mongodb": "^3.6.4",
     "mongoose": "^5.11.19",
     "multer": "^1.4.2",
     "nodemon": "^2.0.7",
-    "path": "^0.12.7",
-    "socket.io": "^3.1.2"
+    "path": "^0.12.7"
   }
 }

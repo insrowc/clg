@@ -21,16 +21,27 @@
         <i class="fas fa-graduation-cap"></i>
         &nbsp; College
       </div>
-
+      <!-- search area -->
       <div class="search-area">
         <div class="search">
-          <form>
-            <input type="text" placeholder="Search notes" name="search" />
+          <form action="/notes/search" method="POST">
+            <input type="text" placeholder="Search notes" name="search" required />
             <button type="submit"><i class="fa fa-search"></i></button>
           </form>
         </div>
         <div class="filter">
+          <form action="/notes/filter" method="post">
+            <select name="filter">
+              <option value=""></option>
+              <option value="high to low downloads">high to low downloads</option>
+              <option value="low to high downloads">low to high downloads</option>
+              <option value="latest to old date">latest to old date</option>
+              <option value="old to latest date">old to latest date</option>
+              <option value="max to min pages">max to min pages</option>
+              <option value="min to max pages">min to max pages</option>
+            </select>
           <button type="submit">Filter</button>
+        </form>
         </div>
       </div>
 
@@ -40,7 +51,7 @@
             <th>Name</th>
             <th>Date</th>
             <th>Downloads</th>
-            <th>Size</th>
+            <th>Pages</th>
             <th></th>
           </tr>
         </thead>
@@ -50,9 +61,9 @@
             <td><i class="fas fa-folder"></i>&nbsp; {{this.originalname}}</td>
             <td>{{this.uploadedAt}}</td>
             <td><i class="fas fa-circle"></i>{{this.downloads}}</td>
-            <td>{{this.size}} KB</td>
+            <td>{{this.filePages}}</td>
             <td>
-              <a href="{{this.destination}}/{{this.filename}}" download="vfindfit">
+              <a href="{{this.destination}}/{{this.filename}}" download="{{this.originalname}}">
               <button type="submit" class="delete"><i onclick="downloadNotes('{{this._id}}')" class="fas fa-download"></i></i></button>
               </a>
             </td>
@@ -96,10 +107,11 @@
           </tr> -->
         </tbody>
       </table>
-      <button type="submit" class="add-btn"><a class="nav-link" href="/upload">
+      <button type="submit" class="add-btn"><a class="nav-link" href="/notesinfo">
         <i class="fas fa-plus"></i></a>
       </button>
     </div>
+
     <script>
       const downloadNotes = (id) => {
 
