@@ -14,6 +14,26 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Montserrat&display=swap');
 
+html{
+	scroll-behavior: smooth;
+  }
+  
+  ::selection{
+	border-radius: 80px;
+	background-color: #fd5f03e0;
+  }
+  
+  ::-webkit-scrollbar{
+	border-radius: 80px;
+	width: 10px;
+	background-color: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb{
+	border-radius: 80px;
+	background-color: #fd5f03de;
+  }
+
 *{
 	font-family: 'Montserrat', sans-serif;
 	list-style: none;

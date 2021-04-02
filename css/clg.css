@@ -1,0 +1,126 @@
+
+
+body{
+    background: linear-gradient(to right, #FFFFFF, #E0E1E3, #DADADA)!important;
+  }
+.courses-container {
+    padding-left: 3%;
+	width: 95%;
+}
+
+.course {
+	background-color: #ffffff00;
+	border-radius: 10px;
+	display: flex;
+	max-width: 100%;
+	margin: 20px;
+	overflow: hidden;
+}
+
+.course h6 {
+    margin-top: 7%!important;
+	opacity: 0.6;
+	margin: 0;
+	letter-spacing: 1px;
+	text-transform: uppercase;
+}
+
+.course h2 {
+    font-size: 25px;
+	letter-spacing: 1px;
+	margin: 10px 0;
+}
+
+.course-preview {
+	background-color: transparent;
+	color: #000000a4;
+	padding: 30px;
+    height: 200px!important;
+	max-width: 250px;
+}
+
+.course-preview a {
+	color: #000000;
+	display: inline-block;
+	font-size: 12px;
+	opacity: 0.6;
+	margin-top: 30px;
+	text-decoration: none;
+}
+
+.course-info {
+	padding: 30px;
+	position: relative;
+	width: 100%;
+}
+
+.progress-container {
+	position: absolute;
+	top: 30px;
+	right: 30px;
+	text-align: right;
+	width: 150px;
+}
+
+.btn {
+	background-color: #e6862d!important;
+	border: 0;
+	border-radius: 50px;
+	box-shadow: 0 10px 10px rgba(0, 0, 0, 0.2);
+	color: #fff;
+	font-size: 16px;
+	padding: 12px 25px;
+	position: absolute;
+	bottom: 30px;
+	right: 30px;
+	letter-spacing: 1px;
+    transition: 0.8s;
+}
+.btn:hover{
+	background-color: #ffffffd2!important;
+	color: #000000bd;
+    transition: 0.8s;
+}
+
+.wrapper{
+padding-top: 7%;
+padding-bottom: 10%;
+}
+
+.profile-card__img {
+    width: 150px;
+    height: 150px;
+    margin-left: auto;
+    margin-right: auto;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    overflow: hidden;
+    position: relative;
+    z-index: 4;
+    box-shadow: 0px 5px 50px 0px #e6862d, 0px 0px 0px 7px rgba(107, 74, 255, 0.5);
+   }
+   .profile-card__cnt {
+    margin-top: -35px;
+    text-align: center;
+    padding: 0 20px;
+    padding-bottom: 40px;
+    transition: all .3s;
+   }
+ 
+   .profile-card__name {
+    font-weight: 700;
+    font-size: 24px;
+    color: #e6862d;
+    margin-bottom: 15px;
+   }
+ 
+   .profile-card__txt {
+    font-size: 18px;
+    font-weight: 500;
+    color: #324e63;
+    margin-bottom: 15px;
+   }
+ 
+   .profile-card__txt strong {
+    font-weight: 700;
+   }

@@ -10,6 +10,25 @@
 /* import global styling */ 
 @import url(./partials/_global.css);
 
+html{
+	scroll-behavior: smooth;
+  }
+  
+  ::selection{
+	border-radius: 80px;
+	background-color: #fd5f03e0;
+  }
+  
+  ::-webkit-scrollbar{
+	border-radius: 80px;
+	width: 10px;
+	background-color: #f1f1f1;
+  }
+  
+  ::-webkit-scrollbar-thumb{
+	border-radius: 80px;
+	background-color: #fd5f03de;
+  }
 
 body{
     margin: 0;
