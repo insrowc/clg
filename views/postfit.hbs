@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+    ></script>
+  </head>
+  <body>
+    <h1>Post a new Fit</h1>
+    <form action="/postfit" method="post" enctype="multipart/form-data">
+      <label for="">select image</label><br />
+      {{!-- fit image --}}
+      <input
+        onchange="otherinput()"
+        type="file"
+        name="fitpic"
+        id="fitpic"
+      /><br /><br />
+      message<br />
+      <input required type="text" name="message" /><br /><br />
+      <label for="">select video</label><br />
+      {{!-- fit video --}}
+      <input
+        onchange="otherinput()"
+        type="file"
+        name="fitpic"
+        id="uploadVideoFile"
+      /><br /><br />
+
+     
+      <button type="submit">submit</button>
+    </form>
+     <div id="videoSourceWrapper">
+        {{!-- <video style="width: 400px; display: none;" id="videoSource" controls>
+        </video> --}}
+      </div>
+    <img
+      style="width: 400px; display: none; object-fit: contain"
+      alt=""
+      src=""
+      id="fitpicpreview"
+    />
+    <div
+      id="uploadVideoProgressBar"
+      style="height: 5px; width: 1%; background: #2781e9; margin-top: -5px"
+    ></div>
+    {{!-- img previews --}}
+    <script>
+      const profileInput = document.querySelector("#fitpic");
+      const profileImg = document.querySelector("#fitpicpreview");
+      const uploadVideoFile = document.querySelector("#uploadVideoFile");
+      const videoPreveiw = document.querySelector("#videoSource");
+
+      const imgPreview = (input, img) => {
+        if (input.files && input.files[0]) {
+          let reader = new FileReader(input);
+          reader.onload = function (e) {
+            img.style.display = "block";
+            img.setAttribute("src", e.target.result);
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      };
+
+      profileInput.addEventListener("change", () => {
+        imgPreview(profileInput, profileImg);
+      });
+       uploadVideoFile.addEventListener("change", () => {
+        imgPreview(uploadVideoFile, videoPreveiw);
+      });
+    </script>
+
+    {{!-- video preview --}}
+    <script>
+      const imgInput = document.querySelector("#fitpic");
+      const videoInput = document.querySelector("#uploadVideoFile");
+      const otherinput = () => {
+        if (imgInput.files && imgInput.files[0]) {
+          console.log(imgInput.files);
+          videoInput.style.display = "none";
+        } else if (videoInput.files && videoInput.files[0]) {
+          console.log(videoInput.files);
+          imgInput.style.display = "none";
+        } else {
+          imgInput.style.display = "block";
+          videoInput.style.display = "block";
+        }
+      };
+    {{!-- $(document).ready(function () {
+        $("#videoSourceWrapper").hide();
+      });
+
+      $("#uploadVideoFile").on("change", function () {
+        var fileInput = document.getElementById("uploadVideoFile");
+        console.log("Trying to upload the video file: %O", fileInput);
+
+        if ("files" in fileInput) {
+          if (fileInput.files.length === 0) {
+            alert("Select a file to upload");
+          } else {
+            var $source = $("#videoSource");
+            $source[0].src = URL.createObjectURL(this.files[0]);
+            $source.parent()[0].load();
+            $("#videoSourceWrapper").show();
+            UploadVideo(fileInput.files[0]);
+          }
+        } else {
+          console.log('No found "files" property');
+        }
+      });
+
+      function UploadVideo(file) {
+        var loaded = 0;
+        var chunkSize = 500000;
+        var total = file.size;
+        var reader = new FileReader();
+        var slice = file.slice(0, chunkSize);
+
+        // Reading a chunk to invoke the 'onload' event
+        reader.readAsBinaryString(slice);
+        console.log('Started uploading file "' + file.name + '"');
+        $("#uploadVideoProgressBar").show();
+
+        reader.onload = function (e) {
+          //Just simulate API
+          setTimeout(function () {
+            loaded += chunkSize;
+            var percentLoaded = Math.min((loaded / total) * 100, 100);
+            console.log(
+              "Uploaded " +
+                Math.floor(percentLoaded) +
+                '% of file "' +
+                file.name +
+                '"'
+            );
+            $("#uploadVideoProgressBar").width(percentLoaded + "%");
+
+            //Read the next chunk and call 'onload' event again
+            if (loaded <= total) {
+              slice = file.slice(loaded, loaded + chunkSize);
+              reader.readAsBinaryString(slice);
+            } else {
+              loaded = total;
+              console.log('File "' + file.name + '" uploaded successfully!');
+              $("#uploadVideoProgressBar").hide();
+            }
+          }, 250);
+        };
+      }
+
+      function PostChunk() { 
+        //Send the sliced chunk to the REST API
+        $.ajax({
+          url: "http://api/url/etc",
+          type: "POST",
+          data: slice,
+          processData: false,
+          contentType: false,
+          error: function (errorData) {
+            console.log(errorData);
+            alert("Video Upload Failed");
+          },
+        }).done(function (e) {
+          //The chunk is successfully uploaded!
+          loaded += chunkSize;
+          var percentLoaded = Math.min((loaded / total) * 100, 100);
+          console.log(
+            "Uploaded " +
+              Math.floor(percentLoaded) +
+              '% of file "' +
+              file.name +
+              '"'
+          );
+          $("#uploadVideoProgressBar").width(percentLoaded + "%");
+
+          //Read the next chunk and call 'onload' event again
+          if (loaded <= total) {
+            slice = file.slice(loaded, loaded + chunkSize);
+            isFirstChunk = false;
+            reader.readAsBinaryString(slice);
+          } else {
+            loaded = total;
+            console.log('File "' + file.name + '" uploaded successfully!');
+            $("#uploadVideoProgressBar").hide();
+          }
+        });
+      } --}}
+    </script>
+  </body>
+</html>

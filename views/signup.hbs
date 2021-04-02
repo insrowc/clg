@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8" />
+    <title>Sign up</title>
+    <link
+      rel="shartcut icon"
+      type="image/x-icon"
+      href="./img/images/Group.png"
+    />
+    <link rel="stylesheet" href="./css/signup.css" />
+    <link rel="stylesheet" href="./css/all.min.css" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+  </head>
+  <body>
+    <div class="container">
+      <header>Signup</header>
+      <div class="progress-bar">
+        <div class="step">
+          <p>Name</p>
+          <div class="bullet">
+            <span>1</span>
+          </div>
+          <div class="check fas fa-check"></div>
+        </div>
+        <div class="step">
+          <p>Contact</p>
+          <div class="bullet">
+            <span>2</span>
+          </div>
+          <div class="check fas fa-check"></div>
+        </div>
+        <div class="step">
+          <p>College</p>
+          <div class="bullet">
+            <span>3</span>
+          </div>
+          <div class="check fas fa-check"></div>
+        </div>
+        <div class="step">
+          <p>Submit</p>
+          <div class="bullet">
+            <span>4</span>
+          </div>
+          <div class="check fas fa-check"></div>
+        </div>
+      </div>
+
+      <div class="form-outer">
+        <form
+          action="/signup"
+          id="signupform"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <div class="page slide-page">
+            <div class="title">Basic Info:</div>
+            <div>
+              <img src="./img/images/profile picture.png" class="avatar" />
+              <button
+                type="button"
+                style="position: relative; cursor: pointer"
+                class="Upload1"
+              >
+                <i class="fas fa-camera"></i>
+                <!-- profile pic -->
+                <input
+                  required
+                  style="
+                    opacity: 0;
+                    position: absolute;
+                    width: 50px;
+                    height: 50px;
+                    top: 0;
+                    left: 0;
+                    border-radius: 50%;
+                    cursor: pointer;
+                  "
+                  type="file"
+                  name="userid"
+                  id="profilepic"
+                />
+              </button>
+              <img src="./img/images/id.png" class="avatar2" /><br />
+              <input required type="file" class="Upload2" name="userid" />
+            </div>
+
+            <div class="field">
+              <div class="label">Full Name</div>
+              <input required type="text" name="fullname" />
+            </div>
+
+            <div class="field">
+              <button type="button" class="firstNext next">Next</button>
+            </div>
+            <p id="msg">{{message}}</p>
+          </div>
+
+          <div class="page">
+            <div class="title">Contact Info:</div>
+            <div class="field">
+              <div class="label">Email Address</div>
+              <input required type="email" name="email" id="email" />
+            </div>
+
+            <div class="field">
+              <div class="label">Phone Number</div>
+              <input required type="number" name="phone" id="phone" />
+            </div>
+            <p>Do not include &plus;91 OR 91</p>
+
+            <div class="field btns">
+              <button type="button" class="prev-1 prev">Previous</button>
+              <button type="button" class="next-1 next">Next</button>
+            </div>
+          </div>
+
+          <div class="page">
+            <div class="title">College Info:</div>
+            <div class="field">
+              <div class="label">College</div>
+              <select required name="collegename">
+                <option value="MEERUT COLLEGE MEERUT" class="options">
+                  MEERUT COLLEGE MEERUT
+                </option>
+                <option value="D. N. Degree College Meerut" class="options">
+                  D. N. Degree College Meerut
+                </option>
+                <option
+                  value="Raghunath Girl’s Post Graduate College"
+                  class="options"
+                >
+                  Raghunath Girl’s Post Graduate College
+                </option>
+                <option value="N A S College Meerut" class="options">
+                  N A S College Meerut
+                </option>
+                <option value="MIET COLLEGE" class="options">
+                  MIET COLLEGE
+                </option>
+                <option
+                  value="Swami Vivekanand Subharti University"
+                  class="options"
+                >
+                  Swami Vivekanand Subharti University
+                </option>
+                <option value="IIMT UNIVERSITY" class="options">
+                  IIMT UNIVERSITY
+                </option>
+              </select>
+            </div>
+
+            <div class="field">
+              <div class="label">Course</div>
+              <input required type="text" name="course" />
+            </div>
+
+            <div class="field">
+              <div class="label">Start Year</div>
+              <input
+                required
+                type="number"
+                class="startyear"
+                name="startyear"
+              />
+            </div>
+
+            <div class="field">
+              <div class="label">End Year</div>
+              <input required type="number" class="endyear" name="endyear" />
+            </div>
+
+            <div class="field btns">
+              <button type="button" class="prev-2 prev">Previous</button>
+              <button type="button" class="next-2 next">Next</button>
+            </div>
+          </div>
+
+          <div class="page">
+            <div class="title">Login Details:</div>
+            <div class="field">
+              <div class="label">Username</div>
+              <input required type="text" name="username" />
+            </div>
+
+            <div class="field">
+              <div class="label">Create Password</div>
+              <input required type="password" id="password" name="password" />
+            </div>
+
+            <div class="field">
+              <div class="label">Confirm Password</div>
+              <input
+                required
+                type="password"
+                id="confirmpassword"
+                name="confirmpassword"
+              />
+            </div>
+
+            <div class="field">
+              <div class="label">What is your best movie?</div>
+              <input required type="text" name="movie" />
+            </div>
+
+            <div class="field">
+              <div class="label">What is your favourite food?</div>
+              <input required type="text" name="food" />
+            </div>
+
+            <p id="lastmsg"></p>
+
+            <div class="field btns">
+              <button type="button" class="prev-3 prev">Previous</button>
+              <button type="submit" class="submit">Submit</button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <script src="./js/signup.js"></script>
+    <!----------- script to preview images after selecting----------------->
+    <script>
+      const profileInput = document.querySelector("#profilepic");
+      const profileImg = document.querySelector(".avatar");
+
+      const idInput = document.querySelector(".Upload2");
+      const idImg = document.querySelector(".avatar2");
+
+      const imgPreview = (input, img) => {
+        if (input.files && input.files[0]) {
+          let reader = new FileReader(input);
+          reader.onload = function (e) {
+            img.setAttribute("src", e.target.result);
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      };
+
+      profileInput.addEventListener("change", () => {
+        imgPreview(profileInput, profileImg);
+      });
+      idInput.addEventListener("change", () => {
+        imgPreview(idInput, idImg);
+      });
+    </script>
+    <!------------------ sign up phone email validation script ------------------->
+    <script>
+      const submitBtn = document.querySelector(".submit");
+      const lastMsg = document.querySelector("#lastmsg");
+
+      let msg = "";
+
+      const validateForm = (e) => {
+        e.preventDefault();
+        const email = document.querySelector("#email").value;
+        const phone = document.querySelector("#phone").value;
+
+        const validateEmail = () => {
+          if (
+            email.slice(email.indexOf("@") + 1, email.indexOf(".")) !== "gmail"
+          ) {
+            msg = "email id should be gmail only";
+          } else {
+            msg = true;
+          }
+          return msg;
+        };
+
+        const validatePhone = () => {
+          if (phone.length !== 10) {
+            msg = "Phone min and max length is 10";
+          } else {
+            msg = true;
+          }
+          return msg;
+        };
+
+        const isEmailValidate = validateEmail();
+        if (isEmailValidate === true) {
+          const isPhoneValidate = validatePhone();
+          if (isPhoneValidate === true) {
+            document.querySelector("#signupform").submit();
+          } else {
+            lastMsg.innerText = msg;
+          }
+        } else {
+          lastMsg.innerText = msg;
+        }
+      };
+
+      submitBtn.onclick = validateForm;
+    </script>
+  </body>
+</html>

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>vFintfit</title>
+
+    <meta name="description" content= "vFindfit- A simple and effective way to find and get what you want in just few taps of your fingers. " />
+    <meta name="robots" content= "index, follow">
+    
+     <link rel="shartcut icon" type="image/x-icon" href="/img/images/Group.png"/>
+  <link href="https://fonts.googleapis.com/css2?family=Ubuntu:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400;1,500;1,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/magnific-popup.min.css">
+  <link rel="stylesheet" href="css/post.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/magnific-popup.js/1.1.0/jquery.magnific-popup.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js"></script>
+  <link rel="stylesheet" href="http://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+  <script src="js/scripts.js"></script>
+</head>
+<body>
+  
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="inner-width">
+      <a href="/" class="logo"></a>
+      <button class="menu-toggler">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+      <div class="navbar-menu">
+        <a href="#">Home</a>
+        <a href="#about">Go Back</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contact -->
+  <section id="contact">
+    <h1 class="section-title">Post A fit</h1>
+    <div class="inner-width">
+      <div class="contact-info">
+        <div class="buttons">
+          <video style="width: 400px;" id="videoSource" controls>
+        </video><br>
+          {{!-- <a href="#">Choose Vid</a> --}}
+        </div>
+      <form action="/postfit" method="post" class="contact-form" enctype="multipart/form-data">
+        <textarea required class="messageZone" placeholder="What's in your mind." name="message" ></textarea>
+         <input
+        type="file"
+        name="fitpic"
+        id="uploadVideoFile"
+      />
+        <input type="submit" value="&nbsp; Post &nbsp;" class="btn">
+      </form>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="inner-width">
+      <div class="copyright">
+        &copy; 2021 | Created & Designed By <a href="#">Aakarsh Sharma</a>
+      </div>
+    </div>
+  </footer>
+
+<script>
+  const uploadVideoFile = document.querySelector("#uploadVideoFile");
+  const videoPreveiw = document.querySelector("#videoSource");
+
+  const imgPreview = (input, img) => {
+    if (input.files && input.files[0]) {
+      let reader = new FileReader(input);
+      reader.onload = function (e) {
+        img.setAttribute("src", e.target.result);
+      };
+      reader.readAsDataURL(input.files[0]);
+    }
+  };
+
+  
+  uploadVideoFile.addEventListener("change", () => {
+    imgPreview(uploadVideoFile, videoPreveiw);
+  });
+</script>
+
+</body>
+</html>

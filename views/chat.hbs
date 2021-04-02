@@ -1,0 +1,1402 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://kit.fontawesome.com/a076d05399.js"></script>
+    <title>Chat</title>
+    <!--  Bootstrap css file  -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      crossorigin="anonymous"
+    ></script>
+    <link
+      rel="shartcut icon"
+      type="image/x-icon"
+      href="./img/images/Group.png"
+    />
+    
+    <style>
+      /* Desktop Chat Area Start */
+      @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@200&display=swap");
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: "Poppins", sans-serif;
+        font-weight: 700;
+      }
+      .gif-popup {
+        position: absolute;
+        right: 1rem;
+        top: -300px;
+        width: 300px;
+        height: 300px;
+        background-color: white;
+        z-index: 1;
+      }
+      div.emoji-drop-down {
+        z-index: 2;
+      }
+      main {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(
+          to right,
+          #ffffffa0,
+          #dadada95,
+          #e0e1e379,
+          #ffffffa0
+        );
+      }
+      .container {
+        width: 100%;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .chate-liste {
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to right,
+          #ffffffa0,
+          #dadada95,
+          #e0e1e379,
+          #ffffffa0
+        );
+        display: flex;
+        flex-direction: column;
+        position: relative;
+      }
+      .chate {
+        width: 150%;
+        height: 100%;
+        display: flex;
+
+        align-items: center;
+        flex-direction: column;
+        background: linear-gradient(
+          to right,
+          #2c2c2ca0,
+          #2c2a2a95,
+          #2f343f79,
+          #181717a0
+        );
+      }
+      .m-info {
+        margin-top: 20px;
+        position: relative;
+        width: 90%;
+        height: 10vh;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+
+      .m-info .avatar {
+        margin-left: 10px;
+      }
+      .p-info {
+        position: absolute;
+        right: 69%;
+        color: #000000;
+      }
+      .p-info h3 {
+        font-weight: 100;
+      }
+      .p-info span {
+        font-size: 15px;
+        color: #000000;
+      }
+      .icon {
+        position: relative;
+        margin-right: 10px;
+      }
+      .icon i {
+        position: absolute;
+        bottom: 30px;
+        right: -500%;
+        color: #000000;
+        cursor: pointer;
+      }
+      .search-box {
+        width: 90%;
+        height: 1rem;
+        display: flex;
+        margin: 1rem;
+        align-items: center;
+      }
+      .search-box i {
+        margin-right: 20px;
+        color: #000000;
+        font-size: 14px;
+      }
+      .search-box input {
+        font-size: 16px;
+        width: 70%;
+        background: none;
+        outline: none;
+        border: none;
+        color: #000000;
+      }
+      .search-box input::placeholder {
+        color: #070707;
+      }
+      .ms-a {
+        display: flex;
+        align-items: center;
+        width: 100%;
+        height: 4rem;
+      }
+      .ms-a .avatar {
+        margin-left: 5px;
+        margin-right: 10px;
+      }
+      .mesg-info {
+        width: 90%;
+        display: flex;
+        justify-content: center;
+        flex-direction: column;
+      }
+      .ms-info {
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+      .sender-name {
+        font-weight: 600;
+        color: #e06e11;
+        letter-spacing: 1px;
+      }
+      .time {
+        color: #a5a5a5;
+        font-size: 14px;
+        margin-right: 20px;
+      }
+      .time span {
+        color: black;
+        border-radius: 100%;
+        margin: 10px;
+      }
+      .action span {
+        font-size: 12px;
+        color: #a5a5a5;
+      }
+      .ms-active {
+        padding: 0px 5px;
+        background: #f8aa03;
+        border-radius: 100%;
+        font-size: 10px;
+      }
+      .new-chate {
+        width: 60px;
+        height: 60px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: #f8750a;
+        position: absolute;
+        border-radius: 100%;
+        bottom: 8px;
+        right: 12px;
+        cursor: pointer;
+        box-shadow: 2px 1px 29px -8px #f8750a;
+      }
+      .new-chate span {
+        font-size: 2rem;
+        color: #000000;
+      }
+      .chat-active {
+        background: linear-gradient(
+          to right,
+          #181717,
+          #8b8b8b,
+          #463c3c
+        ) !important;
+      }
+      .last-chate {
+        opacity: 0.5;
+      }
+
+      .chate-header {
+        width: 100%;
+        height: 10vh;
+        background: linear-gradient(
+          to right,
+          #d86c2e,
+          #f5a40f,
+          #a88f03
+        ) !important;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .header-content {
+        width: 90%;
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .sender-action {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+      .sender-action h3 {
+        font-weight: 100;
+        color: white;
+        letter-spacing: 1px;
+      }
+      .sender-action span {
+        font-size: 15px;
+        color: #ececec;
+      }
+      .icons i {
+        color: #ececec;
+        font-size: 15px;
+        margin-left: 15px;
+        cursor: pointer;
+      }
+      .chate-body {
+        width: 90%;
+        display: flex;
+        flex-direction: column;
+      }
+      .message-sender,
+      .message-recever {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        margin-top: 1rem;
+      }
+      .message-sender {
+        flex-direction: row-reverse;
+      }
+      .message-sender-message {
+        height: auto;
+        width: 50%;
+        margin-right: 1rem;
+        background: #fff;
+        border-radius: 30px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .message-sender-message p {
+        padding: 10px;
+        font-size: 0.8rem;
+        text-align: center;
+      }
+      .message-sender-icon {
+        margin-right: 15px;
+        color: #f8750a;
+        font-size: 12px;
+      }
+      .message-sender-avatar {
+        margin-right: 17px;
+      }
+      .messag-box {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        position: relative;
+      }
+      .message-box-aria {
+        width: 46%;
+        background: #fff;
+        position: absolute;
+        top: 83%;
+        display: flex;
+        align-items: center;
+        left: 1rem;
+        border-radius: 30px;
+        box-shadow: 0px 7px 23px -8px #cccacc;
+      }
+      .message-box-aria input {
+        width: 90%;
+        height: 4rem;
+        border: none;
+        outline: none;
+        background: none;
+        margin-left: 20px;
+      }
+      .message-box-aria input::placeholder {
+        color: gray;
+      }
+      .message-box-aria i {
+        color: gray;
+        cursor: pointer;
+      }
+
+      /* Desktop Chat Area Ends */
+
+      /* Mobile Chat Area Start */
+
+      .app {
+        display: none;
+      }
+      @media only screen and (max-width: 980px) {
+        * {
+          margin: 0;
+          padding: 0;
+          outline: none;
+        }
+
+        body {
+          font-family: Roboto, sans-serif;
+          background: #fefdff;
+        }
+
+        main {
+          display: none;
+        }
+
+        .container {
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          margin: 0px auto;
+          display: inline-block;
+        }
+
+        div.app {
+          display: block;
+          position: relative;
+          width: 100%;
+          height: 100vh;
+          background: transparent;
+          margin-top: 30px;
+        }
+
+        div.app:before {
+          content: "";
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 100px;
+          display: inline-block;
+          box-shadow: inset 0 80px 85px -35px #fd5f03e0;
+          z-index: 0;
+        }
+
+        div.app:after {
+          content: "";
+          position: absolute;
+          left: 0;
+          width: 100%;
+          height: 100px;
+          display: inline-block;
+          bottom: 0;
+          box-shadow: inset 0 -80px 85px -35px #fd5f03e0;
+          z-index: 0;
+        }
+
+        div.app div.head {
+          z-index: 1;
+          position: relative;
+          display: block;
+          width: 100%;
+          height: 50px;
+          line-height: 48px;
+          text-align: center;
+          text-transform: uppercase;
+          letter-spacing: 2px;
+          color: rgba(255, 255, 255, 0.7);
+
+          background: #fd5f03e0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.35);
+          box-shadow: inset 0 -15px 35px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        div.head span.title {
+          position: absolute;
+          width: 100%;
+          display: inline-block;
+          left: 0;
+          font-size: 16px;
+          font-weight: 500;
+          margin-top: 2px;
+          color: #fff;
+        }
+
+        div.head span.messages-notification {
+          position: relative;
+          float: left;
+          font-size: 18px;
+          font-weight: normal;
+          margin-left: 15px;
+          color: #fff;
+          margin-top: 2px;
+        }
+
+        div.head span.messages-notification span.count {
+          position: absolute;
+          font-size: 10px;
+          width: 17px;
+          height: 17px;
+          display: inline-block;
+          background: #f42052;
+          line-height: 17px;
+          border-radius: 100%;
+          margin-top: 0px;
+        }
+
+        div.head span.create-new {
+          float: right;
+          font-size: 17px;
+          font-weight: normal;
+          margin-right: 15px;
+          color: #fff;
+          margin-top: 2px;
+        }
+
+        .clearfix::after {
+          content: "";
+          clear: both;
+          display: table;
+        }
+
+        div.search-bar {
+          position: relative;
+          margin-top: 15px;
+          text-align: center;
+          z-index: 1;
+        }
+
+        div.search-bar .ip-search {
+          width: 85%;
+          border: none;
+          font-size: 16px;
+          padding: 10px 15px;
+          color: rgba(255, 255, 255, 0.7);
+          background: rgba(255, 255, 255, 0.25);
+          border-radius: 50px;
+          border: 1px solid #fd5f03e0;
+          box-shadow: inset 0 25px 25px -15px rgba(60, 51, 176, 0.15);
+        }
+
+        div.search-bar .ip-search::placeholder {
+          color: rgba(255, 255, 255, 0.8);
+          letter-spacing: 1px;
+          font-size: 14px;
+        }
+
+        div.search-bar i.fa {
+          position: absolute;
+          right: 0;
+          margin-right: 25px;
+          margin-top: 14px;
+          color: rgba(255, 255, 255, 0.8);
+          font-size: 12px;
+        }
+
+        .friend-list {
+          margin-top: 35px;
+        }
+
+        .friend-list ul li {
+          position: relative;
+          list-style: none;
+          float: left;
+          width: 20%;
+          text-align: center;
+        }
+
+        .friend-list ul li img {
+          border-radius: 100%;
+          border: 3px solid rgba(255, 255, 255, 1);
+        }
+
+        .friend-list ul li:nth-child(2n + 1) img {
+          width: 40px;
+          height: 40px;
+        }
+
+        .friend-list ul li:nth-child(2n + 2) img {
+          width: 50px;
+          height: 50px;
+          transform: translateY(-10%);
+        }
+
+        .friend-list ul li:nth-child(3) img {
+          width: 70px;
+          height: 70px;
+          transform: translateY(-20%);
+        }
+
+        .friend-list ul li:nth-child(2n + 1) img,
+        .friend-list ul li:nth-child(2n + 1) span.name {
+          opacity: 0.4;
+        }
+
+        .friend-list ul li:nth-child(2n + 2) img,
+        .friend-list ul li:nth-child(2n + 2) span.name {
+          opacity: 0.7;
+        }
+
+        .friend-list ul li.active img,
+        .friend-list ul li.active span.name {
+          opacity: 1;
+        }
+
+        .friend-list ul li.active img {
+          box-shadow: 1px 1px 0 #fd5f03e0, -1px -1px 0#fd5f03e0,
+            0 0 35px rgba(255, 255, 255, 0.3);
+        }
+
+        .friend-list ul li span.name {
+          position: relative;
+          width: 100%;
+          left: 0;
+          text-transform: uppercase;
+          font-size: 12px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+          color: rgba(255, 255, 255, 0.9);
+        }
+
+        .friend-list ul li.active span.name {
+          top: -7px;
+        }
+
+        .friend-list ul li span.name span.status {
+          display: block;
+          text-transform: none;
+          font-weight: 300;
+          font-size: 8px;
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        .friend-list ul li.active span.name span.status {
+          font-size: 9px;
+        }
+
+        .friend-list ul li:nth-child(2n + 1) span.messages span.count {
+          position: absolute;
+          font-size: 10px;
+          width: 17px;
+          height: 17px;
+          display: inline-block;
+          background: #f42052;
+          z-index: 10;
+          line-height: 17px;
+          border-radius: 100%;
+          margin-top: -2px;
+          right: 0;
+          margin-right: 10px;
+          color: #fff;
+        }
+
+        .friend-list ul li:nth-child(2n + 2) span.messages span.count {
+          position: absolute;
+          z-index: 10;
+          font-size: 10px;
+          width: 20px;
+          height: 20px;
+          display: inline-block;
+          background: #f42052;
+          line-height: 20px;
+          border-radius: 100%;
+          margin-top: -10px;
+          right: 0;
+          margin-right: 7px;
+          color: #fff;
+        }
+
+        .friend-list ul li.active span.messages,
+        .friend-list ul li span.messages.hide {
+          display: none;
+        }
+
+        div.chat-messages {
+          position: relative;
+          margin-top: 15px;
+          z-index: 10;
+        }
+
+        div.chat-messages div.chat {
+          position: relative;
+          width: 500px;
+          height: 500px;
+          background: #fcfcfe;
+          left: 40%;
+          margin-left: -150px;
+          padding: 20px;
+          border-radius: 5px;
+          font-size: 15px;
+
+          box-shadow: 30px 0 0 -15px #ff60049a, 60px 0 0 -30px #a55324e0,
+            -30px 0 0 -15px #ff60049a, -60px 0 0 -30px #a55324e0,
+            0 0 25px rgba(255, 255, 255, 0.5);
+        }
+
+        div.chat div.chat-content > span {
+          margin-bottom: 12px;
+        }
+
+        div.chat div.chat-content span.friend {
+          position: relative;
+          width: 70%;
+          height: auto;
+          display: inline-block;
+          background: #fff;
+          padding: 10px;
+          padding-bottom: 25px;
+          box-shadow: 2px 2px 20px -2px rgba(60, 51, 176, 0.2);
+          color: #fd5f03e0;
+        }
+
+        div.chat div.chat-content span.friend.first {
+          border-radius: 15px 15px 15px 2px;
+        }
+
+        div.chat div.chat-content span.friend.last {
+          border-radius: 2px 15px 15px 15px;
+        }
+
+        div.chat div.chat-content span.friend span.time {
+          position: absolute;
+          display: block;
+          right: 0;
+          margin-top: 5px;
+          margin-right: 10px;
+          font-size: 10px;
+          font-weight: 500;
+          color: #fd5f03e0;
+        }
+
+        div.chat div.chat-content span.you {
+          position: relative;
+          float: right;
+          width: 70%;
+          height: auto;
+          background: #fd5f03e0;
+          display: inline-block;
+          padding: 10px;
+          padding-bottom: 25px;
+          color: #fff;
+
+          box-shadow: 2px 2px 20px rgba(60, 51, 176, 0.2),
+            inset -10px -10px 55px rgba(255, 255, 255, 0.1);
+        }
+
+        div.chat div.chat-content span.you span.time {
+          position: absolute;
+          display: block;
+          right: 0;
+          margin-top: 5px;
+          margin-right: 10px;
+          font-size: 10px;
+          font-weight: 500;
+          color: rgba(255, 255, 255, 0.5);
+        }
+
+        div.chat div.chat-content span.you.first {
+          border-radius: 15px 15px 2px 15px;
+        }
+
+        div.chat div.chat-content span.you.last {
+          border-radius: 15px 2px 15px 15px;
+        }
+
+        div.msg-box {
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          left: 0;
+          border-top: 1px solid rgba(60, 51, 176, 0.1);
+          overflow: hidden;
+        }
+
+        div.msg-box .ip-msg {
+          width: 70%;
+          font-size: 14px;
+          padding: 15px;
+          padding-right: 30%;
+          color: #fd5f03e0;
+          border: none;
+          background: rgba(0, 0, 0, 0.03);
+        }
+
+        div.msg-box .ip-msg::placeholder {
+          color: #fd5f03e0;
+        }
+
+        div.msg-box span.btn-group {
+          position: absolute;
+          right: 0;
+          top: 0;
+          margin-top: 14px;
+          display: inline-block;
+          margin-right: 10px;
+        }
+
+        div.msg-box span.btn-group i {
+          color: #fd5f03e0;
+          font-size: 18px;
+          padding: 0 7px;
+        }
+
+        div.footer {
+          position: absolute;
+          width: 100%;
+          bottom: 0;
+          z-index: 10;
+          background: #fd5f03e0;
+          border-top: 1px solid rgba(255, 255, 255, 0.35);
+          box-shadow: inset 0 15px 25px -5px rgba(0, 0, 0, 0.3);
+        }
+
+        div.footer ul li {
+          list-style: none;
+          float: left;
+          width: 20%;
+          display: inline-block;
+          padding: 18px 0;
+          font-size: 18px;
+          text-align: center;
+          color: #8b86ed;
+        }
+
+        div.footer ul li.active {
+          color: #fff;
+          box-shadow: inset 0 -6px 0 rgba(139, 134, 237, 0.8),
+            inset 0 -25px 25px -10px rgba(139, 134, 237, 0.2);
+        }
+      }
+
+      @media only screen and (max-width: 700px) {
+        div.chat-messages div.chat {
+          left: 30%;
+        }
+      }
+
+      @media only screen and (max-width: 600px) {
+        div.chat-messages div.chat {
+          width: 400px;
+          height: 400px;
+          left: 40%;
+        }
+      }
+
+      /* Mobile Chat Area Ends */
+    </style>
+    <link
+      rel="stylesheet"
+      href="./EmojiButtonList.js-main/src/emojibuttonlistjs.min.css"
+    />
+    <script src="./EmojiButtonList.js-main/src/emojibuttonlistjs.min.js"></script>
+    <script>
+      // url Async requesting function
+      function httpGetAsync(theUrl, callback) {
+        // create the request object
+        var xmlHttp = new XMLHttpRequest();
+
+        // set the state change callback to capture when the response comes in
+        xmlHttp.onreadystatechange = function () {
+          if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+            callback(xmlHttp.responseText);
+          }
+        };
+
+        // open as a GET call, pass in the url and set async = True
+        xmlHttp.open("GET", theUrl, true);
+
+        // call send with no params as they were passed in on the url string
+        xmlHttp.send(null);
+
+        return;
+      }
+
+      // callback for the top 8 GIFs of search
+      function tenorCallback_search(responsetext) {
+        // parse the json response
+        var response_objects = JSON.parse(responsetext);
+
+        top_10_gifs = response_objects["results"];
+
+        // load the GIFs -- for our example we will load the first GIFs preview size (nanogif) and share size (tinygif)
+
+        document.getElementById("preview_gif").src =
+          top_10_gifs[0]["media"][0]["nanogif"]["url"];
+
+        // document.getElementById("share_gif").src = top_10_gifs[0]["media"][0]["tinygif"]["url"];
+
+        return;
+      }
+
+      // function to call the trending and category endpoints
+      function grab_data(e) {
+        if (e.key === "Enter") {
+          // set the apikey and limit
+          var apikey = "5TLPY82JL213";
+          var lmt = 8;
+          let search;
+          if (document.querySelector("#gif-input").value === "") {
+            search = "good";
+          } else {
+            search = document.querySelector("#gif-input").value;
+          }
+          // test search term
+          var search_term = search;
+
+          // using default locale of en_US
+          var search_url =
+            "https://g.tenor.com/v1/search?q=" +
+            search_term +
+            "&key=" +
+            apikey +
+            "&limit=" +
+            lmt;
+
+          httpGetAsync(search_url, tenorCallback_search);
+
+          // data will be loaded by each call's callback
+          return;
+        }
+      }
+
+      // SUPPORT FUNCTIONS ABOVE
+      // MAIN BELOW
+
+      // start the flow
+      // grab_data();
+    </script>
+  </head>
+  <body>
+    <!--  ======================= Desktop Chat Area Start  =======================  -->
+    <main>
+      <div class="chate">
+        <div class="chate-header">
+          <div class="header-content">
+            <div class="sender-avatar">
+              <img src="img/catwomen.png" width="50px" alt="" />
+            </div>
+            <div class="sender-action">
+              <h3 id="receiver">{{ username }}</h3>
+              <!-- <span>userStatus</span> -->
+            </div>
+            <div class="icons">
+              <i class="fas fa-user-plus"></i>
+              <i class="fas fa-search"></i>
+              <i class="fas fa-ellipsis-v"></i>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="chate-body" id="messages"></div>
+          <div class="message-box">
+            <div class="message-box-aria">
+              {{!-- message input --}}
+              <input id="message" type="text" placeholder="Type a message.." />
+
+              {{!-- emoji picker  --}}
+              <button id="picker">
+                <i style="margin-left: 5px" class="far fa-smile"></i>
+              </button>
+              {{!-- gif popup --}}
+              <div class="gif-popup">
+                <input
+                  placeholder="type gif name and hit enter..."
+                  onkeyup="grab_data(event)"
+                  style="border: 1px solid brown"
+                  type="text"
+                  name=""
+                  id="gif-input"
+                />
+                <img
+                  id="preview_gif"
+                  src=""
+                  alt=""
+                  style="width: 100%; height: 230px"
+                />
+              </div>
+              {{!-- image input button --}}
+              <button
+                type="button"
+                data-bs-toggle="modal"
+                data-bs-target="#image-sender"
+                class="btn"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="currentColor"
+                  class="bi bi-card-image"
+                  viewBox="0 0 16 16"
+                >
+                  <path d="M6.002 5.5a1.5 1.5 0 1 1-3 0 1.5 1.5 0 0 1 3 0z" />
+                  <path
+                    d="M1.5 2A1.5 1.5 0 0 0 0 3.5v9A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-9A1.5 1.5 0 0 0 14.5 2h-13zm13 1a.5.5 0 0 1 .5.5v6l-3.775-1.947a.5.5 0 0 0-.577.093l-3.71 3.71-2.66-1.772a.5.5 0 0 0-.63.062L1.002 12v.54A.505.505 0 0 1 1 12.5v-9a.5.5 0 0 1 .5-.5h13z"
+                  />
+                </svg>
+                <input id="image-input" type="file" style="display: none" />
+              </button>
+              <div
+                class="modal fade"
+                id="image-sender"
+                tabindex="-1"
+                aria-labelledby="exampleModalLabel"
+                aria-hidden="true"
+              >
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Share</h5>
+                      <button
+                        type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"
+                        aria-label="Close"
+                      >
+                        <i class="fa fa-times"></i>
+                      </button>
+                    </div>
+                    <div class="modal-body comments-body">
+                      <div>
+                        <div class="buttons">
+                          <img
+                            style="height: 300px"
+                            src="./img/images/image 2.png"
+                            id="chatimagepreview"
+                            alt=""
+                            class="about-pic"
+                          /><br />
+                        </div>
+                        <form
+                          action="/chatimg"
+                          method="post"
+                          class="contact-form"
+                          enctype="multipart/form-data"
+                        >
+                          <input type="text" hidden id="sender" name="sender" />
+                          <input
+                            type="text"
+                            hidden
+                            value="{{ username }}"
+                            name="receiver"
+                          />
+                          <input type="file" name="chatimage" id="chatimage" />
+                          <input
+                            type="submit"
+                            value="&nbsp; Post &nbsp;"
+                            class="btn btn-dark btn-ouline"
+                          />
+                        </form>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{!-- send button  --}}
+              <button
+                id="send"
+                style="margin-left: 5px"
+                class="btn btn-success"
+              >
+                Send
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="container">
+        <div class="chate-liste">
+          <div class="m-info">
+            <div class="avatar">
+              <img src="img/batman.png" width="60px" alt="" />
+            </div>
+            <div class="p-info">
+              <div class="pname">
+                <h2>Person1</h2>
+                <span class="p-disc">I am Batman</span>
+              </div>
+              <div class="icon">
+                <i class="fas fa-bars"></i>
+              </div>
+            </div>
+          </div>
+          <div class="search-box">
+            <i class="fas fa-search"></i>
+            <input type="text" placeholder="Search for chate or gorupe chate" />
+          </div>
+          <div class="ms-a chat-active">
+            <div class="avatar">
+              <img src="img/avatar.jpg" width="50px" alt="" />
+            </div>
+            <div class="mesg-info">
+              <div class="ms-info">
+                <span class="sender-name"> Person2</span>
+                <span class="time">
+                  just now <span class="msge-num ms-active">2</span></span
+                >
+              </div>
+              <div class="action">
+                <span>Typing...</span>
+              </div>
+            </div>
+          </div>
+          <div class="ms-a">
+            <div class="avatar">
+              <img src="img/avatar.jpg" width="50px" alt="" />
+            </div>
+            <div class="mesg-info">
+              <div class="ms-info">
+                <span class="sender-name"> Person3</span>
+                <span class="time">
+                  Yesterday<span class="msge-num"></span
+                ></span>
+              </div>
+              <div class="action">
+                <span>Hi </span>
+              </div>
+            </div>
+          </div>
+          <div class="ms-a">
+            <div class="avatar">
+              <img src="img/avatar.jpg" width="50px" alt="" />
+            </div>
+            <div class="mesg-info">
+              <div class="ms-info">
+                <span class="sender-name">Person3</span>
+                <span class="time"> 20:24 <span class="msge-num"></span></span>
+              </div>
+              <div class="action">
+                <span>Where are you ?</span>
+              </div>
+            </div>
+          </div>
+          <div class="ms-a">
+            <div class="avatar">
+              <img src="img/avatar.jpg" width="50px" alt="" />
+            </div>
+            <div class="mesg-info">
+              <div class="ms-info">
+                <span class="sender-name"> Person4</span>
+                <span class="time">
+                  just now <span class="msge-num ms-active">4</span></span
+                >
+              </div>
+              <div class="action">
+                <span>Not done yet</span>
+              </div>
+            </div>
+          </div>
+          <div class="ms-a">
+            <div class="avatar">
+              <img src="img/avatar.jpg" width="50px" alt="" />
+            </div>
+            <div class="mesg-info">
+              <div class="ms-info">
+                <span class="sender-name">Person5</span>
+                <span class="time">
+                  just now <span class="msge-num ms-active">5</span></span
+                >
+              </div>
+              <div class="action">
+                <span>Typing...</span>
+              </div>
+            </div>
+          </div>
+          <div class="ms-a">
+            <div class="avatar">
+              <img src="img/avatar.jpg" width="50px" alt="" />
+            </div>
+            <div class="mesg-info">
+              <div class="ms-info">
+                <span class="sender-name"> Person6</span>
+                <span class="time">
+                  2 days ago <span class="msge-num"></span
+                ></span>
+              </div>
+              <div class="action">
+                <span
+                  ><i
+                    class="fas fa-video"
+                    style="color: rgb(207, 207, 207)"
+                  ></i>
+                  missed video call</span
+                >
+              </div>
+            </div>
+          </div>
+          <div class="ms-a last-chate">
+            <div class="avatar">
+              <img src="img/avatar.jpg" width="50px" alt="" />
+            </div>
+            <div class="mesg-info">
+              <div class="ms-info">
+                <span class="sender-name"> Person7</span>
+                <span class="time">
+                  just now <span class="msge-num"></span
+                ></span>
+              </div>
+              <div class="action">
+                <span>Typing...</span>
+              </div>
+            </div>
+          </div>
+          <div class="new-chate">
+            <span>+</span>
+          </div>
+        </div>
+      </div>
+    </main>
+    <!--  ======================= Desktop Chat Area Ends  =======================  -->
+    <!--  ======================= Mobile Chat Area Start  =======================  -->
+    <div class="container">
+      <div class="app">
+        <div class="head clearfix">
+          <span class="messages-notification">
+            <i class="fa fa-comments-o"></i>
+            <span class="count">2</span>
+          </span>
+          <span class="title">Messenger</span>
+          <span class="create-new">
+            <i class="fa fa-pencil-square-o"></i>
+          </span>
+        </div>
+
+        <div class="search-bar">
+          <i class="fa fa-search"></i>
+          <input type="text" class="ip-search" placeholder="Search" />
+        </div>
+
+        <div class="body">
+          <div class="friend-list clearfix">
+            <ul>
+              <li>
+                <span class="messages">
+                  <span class="count">1</span>
+                </span>
+                <img src="img/batman.png" alt="" />
+                <span class="name">
+                  Batman
+                  <span class="status"> Active 2h ago </span>
+                </span>
+              </li>
+              <li>
+                <span class="messages hide">
+                  <span class="count"></span>
+                </span>
+                <img src="img/catwomen.png" alt="" />
+                <span class="name">
+                  catwomen
+                  <span class="status"> Online </span>
+                </span>
+              </li>
+              <li class="active">
+                <span class="messages hide">
+                  <span class="count"></span>
+                </span>
+                <img src="img/batman.png" alt="" />
+                <span class="name">
+                  Batman
+                  <span class="status"> Active 2 mins ago </span>
+                </span>
+              </li>
+              <li>
+                <span class="messages">
+                  <span class="count">7</span>
+                </span>
+                <img src="img/batman.png" alt="" />
+                <span class="name">
+                  Batman
+                  <span class="status"> Active 1h ago </span>
+                </span>
+              </li>
+              <li>
+                <span class="messages hide">
+                  <span class="count"></span>
+                </span>
+                <img src="img/catwomen.png" alt="" />
+                <span class="name">
+                  Catwomen
+                  <span class="status"> Online </span>
+                </span>
+              </li>
+            </ul>
+          </div>
+
+          <div class="chat-messages">
+            <div class="chat">
+              <div class="chat-content clearfix">
+                <span class="friend last">
+                  Hi
+                  <span class="time"> 10:00 PM </span>
+                </span>
+                <span class="you first">
+                  Hi
+                  <span class="time"> 10:00 PM </span>
+                </span>
+                <span class="you last">
+                  lets meet
+                  <span class="time"> 10:00 PM </span>
+                </span>
+              </div>
+
+              <div class="msg-box">
+                <input
+                  type="text"
+                  class="ip-msg"
+                  placeholder="type something.."
+                />
+                <span class="btn-group">
+                  <i class="fa fa-paper-plane"></i>
+                  <i class="fa fa-paperclip"></i>
+                </span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer">
+          <ul>
+            <li class="active">
+              <i class="fa fa-comments-o"></i>
+            </li>
+            <li>
+              <i class="fa fa-tags"></i>
+            </li>
+            <li>
+              <i class="fa fa-heart"></i>
+            </li>
+            <li>
+              <i class="fa fa-clock-o"></i>
+            </li>
+            <li>
+              <i class="fa fa-cog"></i>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+    <!--  ======================= Mobile Chat Area Ends  =======================  -->
+    <!-- image preview -->
+    <script>
+      const profileInput = document.querySelector("#chatimage");
+      const profileImg = document.querySelector("#chatimagepreview");
+
+      const imgPreview = (input, img) => {
+        if (input.files && input.files[0]) {
+          let reader = new FileReader(input);
+          reader.onload = function (e) {
+            img.setAttribute("src", e.target.result);
+          };
+          reader.readAsDataURL(input.files[0]);
+        }
+      };
+
+      profileInput.addEventListener("change", () => {
+        imgPreview(profileInput, profileImg);
+      });
+    </script>
+    {{!-- emoji picker --}}
+    <script>
+      var instance = new emojiButtonList("picker", {
+        dropDownXAlign: "left",
+        textBoxID: "message",
+      });
+    </script>
+    {{!-- emoji picker end --}}
+
+    <script>
+      const sendMsgBtn = document.querySelector("#send");
+      const messageArea = document.querySelector("#messages");
+      const textArea = document.querySelector("#message");
+      const gifImg = document.querySelector("#preview_gif");
+      const http = new XMLHttpRequest();
+      let receiver;
+
+      // get cookie
+      function getCookie(cname) {
+        var name = cname + "=";
+        var decodedCookie = decodeURIComponent(document.cookie);
+        var ca = decodedCookie.split(";");
+        for (var i = 0; i < ca.length; i++) {
+          var c = ca[i];
+          while (c.charAt(0) == " ") {
+            c = c.substring(1);
+          }
+          if (c.indexOf(name) == 0) {
+            return c.substring(name.length, c.length);
+          }
+        }
+        return "";
+      }
+
+      const getChats = async () => {
+        fetch(`http://localhost:3001/getchat?username=${receiver}`)
+          .then((response) => response.json())
+          .then((data) => {
+            messageArea.innerHTML = "";
+            data.map((item) => {
+              // console.log(item);
+              let type;
+              if (item.receiver === receiver) {
+                type = "incoming";
+              } else type = "outgoing";
+              let message = `
+                    <div class="message-sender">
+                      <div class="message-sender-avatar">
+                          <img src="img/batman.png" width="50px" alt="">
+                      </div>
+                      <div class="message-sender-message  ">
+                          <p>${item.message}</p>
+                          <img src="${item.gif}" />`;
+              if (item.image) {
+                message += `<img style="width:100px;" src="${item.image.destination}/${item.image.originalname}" />`;
+              }
+              message += `</div>
+                      <div class="message-sender-icon"><i class="">=></i></div>
+                    </div>
+                  `;
+              messageArea.innerHTML = message;
+            });
+          })
+          .catch((err) => {
+            console.warn("Something went wrong.", err);
+          });
+      };
+
+      window.onload = () => {
+        receiver = document.querySelector("#receiver").innerText;
+        document.querySelector("#sender").value = getCookie("user");
+        setInterval(getChats, 1000);
+      };
+
+      sendMsgBtn.onclick = () => {
+        const msg = textArea.value;
+        let gif = gifImg !== "" ? gifImg.src : "";
+        if (msg !== "" || gif !== "") {
+          http.open("POST", "http://localhost:3001/chat", true);
+          http.setRequestHeader("Content-type", "application/json");
+          const data = {
+            message: msg,
+            sender: getCookie("user"),
+            receiver: receiver,
+            gif: gif,
+          };
+          http.send(JSON.stringify(data));
+          textArea.value = "";
+          gifImg.src = "";
+        } else {
+          alert("message can't be empty");
+        }
+      };
+    </script>
+
+    
+  </body>
+</html>

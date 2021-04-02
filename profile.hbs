@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Profile</title>
+	<link rel="shartcut icon" type="image/x-icon" href="./img/images/Group.png"/>
+	<link rel="stylesheet" href="./css/profile.css">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:300,400,600">
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css">
+</head>
+<body>
+	
+	<header>
+
+		<div class="container">
+	
+			<div class="profile">
+	
+				<div class="profile-image">
+	
+					<img src="{{user.files.0.destination}}/{{user.files.0.originalname}}" alt="" style="width: 70%; height: 70%;">
+	
+				</div>
+	
+				<div class="profile-user-settings">
+	
+					<h1 class="profile-user-name">{{user.fullName}}</h1>
+	
+					<button class="btn profile-edit-btn"><a href="/editprofile">Edit Profile</a></button>
+	
+					<button class="btn profile-settings-btn" aria-label="profile settings"><i class="fas fa-cog" aria-hidden="true"></i></button>
+
+					<h2 class="profile-college-name">{{user.collegeName}}</h2>
+	
+				</div>
+	
+				<div class="profile-stats">
+	
+					<ul>
+						<li><span class="profile-stat-count">{{fitLength}}</span> fits</li>
+						<!-- <li><span class="profile-stat-count">1909</span> followers</li>
+						<li><span class="profile-stat-count">1119</span> following</li> -->
+					</ul>
+	
+				</div>
+	
+				<div class="profile-bio">
+	
+					<p><span class="profile-real-name">Shaktiman </span> Lorem ipsum dolor sit, amet consectetur adipisicing elit <i class="fas fa-heart" aria-hidden="true"></i></p>
+	
+				</div>
+	
+			</div>
+	
+		</div>
+	
+	</header>
+	
+	<main>
+	
+		<div class="container">
+	
+			<div class="gallery">
+				{{#each fits}}
+					<div class="gallery-item" tabindex="0">
+						<img src="{{this.file.destination}}/{{this.file.originalname}}" class="gallery-image" alt="">
+						<div class="gallery-item-info">
+							<ul>
+								<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> {{this.likescount}}</li>
+								<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> {{this.commentsCount}}</li>
+							</ul>
+						</div>
+					</div>
+				{{/each}}
+				<!-- <div class="gallery-item" tabindex="0">
+	
+					<img src="./img/back (2).jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 89</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 5</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/back (3).jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-type">
+	
+						<span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
+	
+					</div>
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 429</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 1</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/avatar.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-type">
+	
+						<span class="visually-hidden">Video</span><i class="fas fa-video" aria-hidden="true"></i>
+	
+					</div>
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 5</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 0</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/images/p1.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-type">
+	
+						<span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
+	
+					</div>
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 447</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 1</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/images/p.jfif" class="gallery-image" alt="">
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 904</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 3</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/joren-aranas-74827_5KhOY-unsplash.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-type">
+	
+						<span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
+	
+					</div>
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 952</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 4</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/surface-zyeYEU7WyNo-unsplash.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 69</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/avatar.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-type">
+	
+						<span class="visually-hidden">Gallery</span><i class="fas fa-clone" aria-hidden="true"></i>
+	
+					</div>
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 5</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 0</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/joren-aranas-74827_5KhOY-unsplash.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 234</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 1</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/surface-zyeYEU7WyNo-unsplash.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 741</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 0</li>
+						</ul>
+	
+					</div>
+	
+				</div>
+	
+				<div class="gallery-item" tabindex="0">
+	
+					<img src="./img/joren-aranas-74827_5KhOY-unsplash.jpg" class="gallery-image" alt="">
+	
+					<div class="gallery-item-type">
+	
+						<span class="visually-hidden">Video</span><i class="fas fa-video" aria-hidden="true"></i>
+	
+					</div>
+	
+					<div class="gallery-item-info">
+	
+						<ul>
+							<li class="gallery-item-likes"><span class="visually-hidden">Likes:</span><i class="fas fa-heart" aria-hidden="true"></i> 30</li>
+							<li class="gallery-item-comments"><span class="visually-hidden">Comments:</span><i class="fas fa-comment" aria-hidden="true"></i> 2</li>
+						</ul>
+	
+					</div>
+	
+				</div> -->
+	
+			</div>
+	
+			<!-- <div class="loader"></div> -->
+	
+		</div>
+	
+	</main>
+</body>
+</html>

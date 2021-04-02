@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>vFintfit</title>
+    <meta
+      name="description"
+      content="vFindfit- A simple and effective way to find and get what you want in just few taps of your fingers. "
+    />
+    <meta name="robots" content="index, follow" />
+    <link
+      rel="shartcut icon"
+      type="image/x-icon"
+      href="./img/images/Group.png"
+    />
+    <!--  Bootstrap css file  -->
+    <link rel="stylesheet" href="./css/bootstrap.min.css" />
+    <!--  font awesome icons  -->
+    <link rel="stylesheet" href="./css/all.min.css" />
+    <!--  Magnific Popup css file  -->
+    <link
+      rel="stylesheet"
+      href="./vendor/Magnific-Popup/dist/magnific-popup.css"
+    />
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+      crossorigin="anonymous"
+    ></script>
+    <!--  Owl-carousel css file  -->
+    <link
+      rel="stylesheet"
+      href="./vendor/owl-carousel/css/owl.carousel.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="./vendor/owl-carousel/css/owl.theme.default.min.css"
+    />
+    <!--  custom css file  -->
+    <link rel="stylesheet" href="./css/style.css" />
+    <!--  Responsive css file  -->
+    <link rel="stylesheet" href="./css/responsive.css" />
+    <style>
+      .like {
+        background-color: #fd5f03e0;
+      }
+      .like i {
+        color: white;
+      }
+      .dislike {
+        background-color: white;
+      }
+      .dislike i {
+        color: #fd5f03e0;
+      }
+      .fa-comment-dots {
+        color: #fd5f03e0;
+      }
+      .notification {
+        position: fixed;
+        top: 6rem;
+        right: 5rem;
+        background-color: #fd5f03e0;
+        display: inline-block;
+        padding: 1rem;
+        border-radius: 50%;
+        cursor: pointer;
+      }
+      .notification i {
+        font-size: 1.5rem;
+        color: white;
+        position: relative;
+      }
+      .notification i .count {
+        position: absolute;
+        top: -10px;
+        right: -7px;
+        color: blue;
+      }
+      
+    </style>
+  </head>
+  <body>
+    {{!-- notifiction bell --}}
+    <a href="/notifications">
+      <div class="notification">
+        <i class="fa fa-bell"><span class="count">0</span></i>
+      </div>
+    </a>
+    {{!-- facebook redirect when sharing post --}}
+    <div id="fb-root"></div>
+    <script
+      async
+      defer
+      crossorigin="anonymous"
+      src="https://connect.facebook.net/en_US/sdk.js#xfbml=1&version=v10.0"
+      nonce="KU04Ziwj"
+    ></script>
+    <!--  ======================= Start Header Area ============================== -->
+    <header class="header_area">
+      <div class="main-menu">
+        <nav class="navbar navbar-expand-lg navbar-light">
+          <a class="navbar-brand" href="#"
+            ><img
+              src="./img/images/Group.png"
+              alt="logo"
+              style="width: 30%; height: 30%"
+            />vFindfit</a
+          >
+          <button
+            class="navbar-toggler"
+            type="button"
+            data-toggle="collapse"
+            data-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation"
+          >
+            <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <div class="mr-auto"></div>
+            <ul class="navbar-nav">
+              <li class="nav-item" style="font-size: 0.5rem">
+                <a class="nav-link" href="/postimage">Post image</a>
+              </li>
+              <li class="nav-item" style="font-size: 0.5rem">
+                <a class="nav-link" href="/postvideo">Post video</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/announcement">announcment</a>
+              </li>
+              {{!--
+              <li class="nav-item">
+                <a class="nav-link" href="/signup">Sign Up</a>
+              </li>
+              --}}
+              <li class="nav-item">
+                <a class="nav-link" href="/login">Log in</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/studynotes">study notes</a>
+              </li>
+              <!-- <li class="nav-item">
+                            <a class="nav-link" href="#">invite</a>
+                        </li> -->
+            </ul>
+          </div>
+        </nav>
+      </div>
+    </header>
+    <!--  ======================= End Header Area ============================== -->
+    <!--  ======================= Start Main Area ================================ -->
+    <main class="site-main">
+      <!--  ======================= Start Banner Area =======================  -->
+      <section class="site-banner">
+        <div class="container">
+          <div class="row">
+            <div class="wrapper1">
+              <div class="toggle_button">
+                <ul>
+                  <li>
+                    <a class="share_btn">
+                      <span class="text">MORE</span>
+                      <span class="icon"><i class="fas fa-plus"></i></span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/jumptoothercolleges" class="sm jump">
+                      <span class="icon">
+                        <i class="fas fa-graduation-cap"></i>
+                      </span>
+                      <span class="text">Jump to other collages</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/findfriends" class="sm find">
+                      <span class="icon">
+                        <i class="fas fa-user-friends"></i>
+                      </span>
+                      <span class="text">Find Friends</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="#" class="sm book">
+                      <span class="icon">
+                        <i class="far fa-bookmark"></i>
+                      </span>
+                      <span class="text">Read Free Books</span>
+                    </a>
+                  </li>
+                  <li>
+                    <a href="/profile" class="sm setting">
+                      <span class="icon">
+                        <i class="fas fa-cog"></i>
+                      </span>
+                      <span class="text">Settings</span>
+                    </a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <nav class="nav">
+              <a href="/jumptoothercolleges" class="nav__link">
+                <i class="fas fa-graduation-cap"></i>
+                <span class="nav__text">Jump</span>
+              </a>
+              <a href="/findfriends" class="nav__link nav__link--active">
+                <i class="fas fa-user-friends"></i>
+                <span class="nav__text">Friends</span>
+              </a>
+              <a href="#" class="nav__link">
+                <i class="far fa-bookmark"></i>
+                <span class="nav__text">Books</span>
+              </a>
+              <a href="/profile" class="nav__link">
+                <i class="fas fa-cog"></i>
+                <span class="nav__text">Settings</span>
+              </a>
+            </nav>
+
+            <div class="col-lg-6 col-md-12 banner-image">
+              {{!-------------------------- one post ------------------------- --}}
+              {{!---- fits is array of object #each iterate array to render all posts ------}}
+
+              {{#each fits}}
+              <div id="{{ this._id }}">
+                <a class="btn5" href="#">
+                  <img
+                    src="{{ this.userphoto.destination }}/{{
+                      this.userphoto.filename
+                    }}"
+                    alt="banner-img"
+                    class="img-fluid"
+                  />
+                </a>
+                <a class="btn6" href="#">
+                  <i class="fas fa-ellipsis-v"></i>
+                </a>
+                {{!------------- this code return video tag or img tag ------------}}
+                {{#containsparam this.file.mimetype this.file.destination this.file.originalname}}
+                {{/containsparam}}
+                <p class="para">
+                  {{ this.message }}
+                </p>
+                <button
+                  class="likes-count-btn btn-light"
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#l{{ this._id }}"
+                >
+                  <span class="likes-count">{{ this.likescount }}</span>
+                  People liked Post
+                </button>
+                <br />
+                <!-- likes Modal -->
+                <div
+                  class="like-modal modal fade"
+                  id="l{{ this._id }}"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Likes
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                      <div class="modal-body">
+                        {{#each this.likes}}
+                        <svg
+                          aria-hidden="true"
+                          style="width: 30px"
+                          focusable="false"
+                          data-prefix="far"
+                          data-icon="thumbs-up"
+                          class="svg-inline--fa fa-thumbs-up fa-w-16"
+                          role="img"
+                          viewBox="0 0 512 512"
+                        >
+                          <path
+                            fill="currentColor"
+                            d="M466.27 286.69C475.04 271.84 480 256 480 236.85c0-44.015-37.218-85.58-85.82-85.58H357.7c4.92-12.81 8.85-28.13 8.85-46.54C366.55 31.936 328.86 0 271.28 0c-61.607 0-58.093 94.933-71.76 108.6-22.747 22.747-49.615 66.447-68.76 83.4H32c-17.673 0-32 14.327-32 32v240c0 17.673 14.327 32 32 32h64c14.893 0 27.408-10.174 30.978-23.95 44.509 1.001 75.06 39.94 177.802 39.94 7.22 0 15.22.01 22.22.01 77.117 0 111.986-39.423 112.94-95.33 13.319-18.425 20.299-43.122 17.34-66.99 9.854-18.452 13.664-40.343 8.99-62.99zm-61.75 53.83c12.56 21.13 1.26 49.41-13.94 57.57 7.7 48.78-17.608 65.9-53.12 65.9h-37.82c-71.639 0-118.029-37.82-171.64-37.82V240h10.92c28.36 0 67.98-70.89 94.54-97.46 28.36-28.36 18.91-75.63 37.82-94.54 47.27 0 47.27 32.98 47.27 56.73 0 39.17-28.36 56.72-28.36 94.54h103.99c21.11 0 37.73 18.91 37.82 37.82.09 18.9-12.82 37.81-22.27 37.81 13.489 14.555 16.371 45.236-5.21 65.62zM88 432c0 13.255-10.745 24-24 24s-24-10.745-24-24 10.745-24 24-24 24 10.745 24 24z"
+                          ></path>
+                        </svg>
+                        <a href="/friendsprofile?username={{ this }}">{{
+                          this
+                        }}</a
+                        ><br />
+                        <br />
+                        {{/each}}
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                {{!-- if return anchor tag written below this statement --}}
+                {{#likeordislike this.likes this._id}}{{/likeordislike}}
+                <!-- likes Button trigger modal -->
+                <a
+                  class="btn dislike"
+                  onclick="likeDislike(event,'{{ this._id }}')"
+                  href="#"
+                >
+                  <i class="fas fa-thumbs-up"></i>
+                </a>
+                <!-- comments Button trigger modal -->
+                <a
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#m{{ this._id }}"
+                  class="btn"
+                >
+                  <i class="fas fa-comment-dots"></i>
+                </a>
+                <!-- share Button trigger modal -->
+                <a
+                  type="button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#s{{ this._id }}"
+                  class="btn"
+                >
+                  <i class="fas fa-share-alt"></i>
+                </a>
+                <!-- sharing model -->
+                <div
+                  class="modal fade"
+                  id="s{{ this._id }}"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Share
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                      <div class="modal-body comments-body">
+                        <div>
+                          {{!-- share facebook --}}
+                          <a
+                            target="_blank"
+                            href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A3001%2F%23{{
+                              this._id
+                            }}"
+                            class="fb-xfbml-parse-ignore"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="35"
+                              height="35"
+                              fill="currentColor"
+                              class="bi bi-facebook"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M16 8.049c0-4.446-3.582-8.05-8-8.05C3.58 0-.002 3.603-.002 8.05c0 4.017 2.926 7.347 6.75 7.951v-5.625h-2.03V8.05H6.75V6.275c0-2.017 1.195-3.131 3.022-3.131.876 0 1.791.157 1.791.157v1.98h-1.009c-.993 0-1.303.621-1.303 1.258v1.51h2.218l-.354 2.326H9.25V16c3.824-.604 6.75-3.934 6.75-7.951z"
+                              />
+                            </svg> </a
+                          ><br />
+                          <a
+                            target="_blank"
+                            href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A3001%2F%23{{
+                              this._id
+                            }}"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="35"
+                              height="35"
+                              fill="currentColor"
+                              class="bi bi-twitter"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M5.026 15c6.038 0 9.341-5.003 9.341-9.334 0-.14 0-.282-.006-.422A6.685 6.685 0 0 0 16 3.542a6.658 6.658 0 0 1-1.889.518 3.301 3.301 0 0 0 1.447-1.817 6.533 6.533 0 0 1-2.087.793A3.286 3.286 0 0 0 7.875 6.03a9.325 9.325 0 0 1-6.767-3.429 3.289 3.289 0 0 0 1.018 4.382A3.323 3.323 0 0 1 .64 6.575v.045a3.288 3.288 0 0 0 2.632 3.218 3.203 3.203 0 0 1-.865.115 3.23 3.23 0 0 1-.614-.057 3.283 3.283 0 0 0 3.067 2.277A6.588 6.588 0 0 1 .78 13.58a6.32 6.32 0 0 1-.78-.045A9.344 9.344 0 0 0 5.026 15z"
+                              />
+                            </svg> </a
+                          ><br />
+                          <a
+                            target="_blank"
+                            href="whatsapp://send?text={{ this._id }}"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="35"
+                              height="35"
+                              fill="currentColor"
+                              class="bi bi-whatsapp"
+                              viewBox="0 0 16 16"
+                            >
+                              <path
+                                d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326zM7.994 14.521a6.573 6.573 0 0 1-3.356-.92l-.24-.144-2.494.654.666-2.433-.156-.251a6.56 6.56 0 0 1-1.007-3.505c0-3.626 2.957-6.584 6.591-6.584a6.56 6.56 0 0 1 4.66 1.931 6.557 6.557 0 0 1 1.928 4.66c-.004 3.639-2.961 6.592-6.592 6.592zm3.615-4.934c-.197-.099-1.17-.578-1.353-.646-.182-.065-.315-.099-.445.099-.133.197-.513.646-.627.775-.114.133-.232.148-.43.05-.197-.1-.836-.308-1.592-.985-.59-.525-.985-1.175-1.103-1.372-.114-.198-.011-.304.088-.403.087-.088.197-.232.296-.346.1-.114.133-.198.198-.33.065-.134.034-.248-.015-.347-.05-.099-.445-1.076-.612-1.47-.16-.389-.323-.335-.445-.34-.114-.007-.247-.007-.38-.007a.729.729 0 0 0-.529.247c-.182.198-.691.677-.691 1.654 0 .977.71 1.916.81 2.049.098.133 1.394 2.132 3.383 2.992.47.205.84.326 1.129.418.475.152.904.129 1.246.08.38-.058 1.171-.48 1.338-.943.164-.464.164-.86.114-.943-.049-.084-.182-.133-.38-.232z"
+                              />
+                            </svg> </a
+                          ><br />
+                          {{!-- copy link --}}
+                          <input
+                            type="text"
+                            value="http://localhost:3001/#{{ this._id }}"
+                            style="width: 440px"
+                            id="copy{{ this._id }}"
+                          /><br />
+                          <button onclick="copyLink('#copy{{ this._id }}')">
+                            Copy text
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <br />
+                <!-- comments Modal -->
+                <div
+                  class="modal fade"
+                  id="m{{ this._id }}"
+                  tabindex="-1"
+                  aria-labelledby="exampleModalLabel"
+                  aria-hidden="true"
+                >
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                          Comments
+                        </h5>
+                        <button
+                          type="button"
+                          class="btn-close"
+                          data-bs-dismiss="modal"
+                          aria-label="Close"
+                        >
+                          <i class="fa fa-times"></i>
+                        </button>
+                      </div>
+                      <div class="modal-body comments-body{{ this._id }}">
+                        {{#each this.comments}}
+                        <b
+                          ><a
+                            href="/friendsprofile?username={{ this.username }}"
+                            >{{ this.username }}</a
+                          ></b
+                        >
+                        - <span>{{ this.comment }}</span>
+                        <br />
+                        {{/each}}
+                      </div>
+                      <div class="modal-footer">
+                        <input
+                          type="text"
+                          name="comment"
+                          id="comment{{ this._id }}"
+                          class="form-control"
+                        />
+                        <button
+                          onclick="postcomment(event, '{{ this._id }}', '{{
+                            this.username
+                          }}')"
+                          class="btn btn-primary"
+                        >
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="32"
+                            height="32"
+                            fill="currentColor"
+                            class="bi bi-telegram"
+                            viewBox="0 0 16 16"
+                          >
+                            <path
+                              d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM8.287 5.906c-.778.324-2.334.994-4.666 2.01-.378.15-.577.298-.595.442-.03.243.275.339.69.47l.175.055c.408.133.958.288 1.243.294.26.006.549-.1.868-.32 2.179-1.471 3.304-2.214 3.374-2.23.05-.012.12-.026.166.016.047.041.042.12.037.141-.03.129-1.227 1.241-1.846 1.817-.193.18-.33.307-.358.336a8.154 8.154 0 0 1-.188.186c-.38.366-.664.64.015 1.088.327.216.589.393.85.571.284.194.568.387.936.629.093.06.183.125.27.187.331.236.63.448.997.414.214-.02.435-.22.547-.82.265-1.417.786-4.486.906-5.751a1.426 1.426 0 0 0-.013-.315.337.337 0 0 0-.114-.217.526.526 0 0 0-.31-.093c-.3.005-.763.166-2.984 1.09z"
+                            />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {{/each}}
+            </div>
+          </div>
+        </div>
+      </section>
+      <!--  ======================= End Banner Area =======================  -->
+      <!--  ======================= Start Chat Area ================================ -->
+      <div class="wrapper">
+        <a href="#">
+          <div class="icon Chat">
+            <div class="tooltip">Chat</div>
+            <span><i class="far fa-comment"></i></span>
+          </div>
+        </a>
+      </div>
+      <!--  ======================= End Chat Area ================================ -->
+    </main>
+    <!--  ======================= End Main Area ================================ -->
+    <!--  ======================= Start Footer Area ================================ -->
+    <footer class="footer-area">
+      <div class="container">
+        <div class="">
+          <div class="site-logo text-center py-4">
+            <!-- <a href="#"><img src="./img/images/Plant 1.png" alt="logo"></a> -->
+          </div>
+          <!-- <div class="social text-center">
+                    <h5 class="text-uppercase">vFindfit</h5>
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                </div> -->
+          <div class="copyrights text-center">
+            <p class="para">
+              Copyright ©2021 All rights reserved | By
+              <a href="#"
+                ><span style="color: var(--primary-color)">vFindfit</span></a
+              >
+            </p>
+          </div>
+        </div>
+      </div>
+    </footer>
+    <!--  ======================= End Footer Area ================================ -->
+    <!--  ======================= Box Area ================================ -->
+    <script>
+      const copyLink = (selector) => {
+        var copyText = document.querySelector(selector);
+        copyText.select();
+        copyText.setSelectionRange(0, 99999);
+        document.execCommand("copy");
+      };
+    </script>
+    <!-- like dislike script -->
+    <script>
+      const likeDislike = (e, postId) => {
+        e.preventDefault();
+        let likeOrDislike, perform;
+
+        // get class of like dislike button
+        e.target.classList[0] === "fas"
+          ? (likeOrDislike = e.target.parentNode.classList[1])
+          : (likeOrDislike = e.target.classList[1]);
+
+        let http = new XMLHttpRequest();
+        http.open("POST", "http://localhost:3001/likedislike", true);
+        http.setRequestHeader("Content-Type", "application/json");
+
+        // what action shoud be perform like OR dislike
+        likeOrDislike === "dislike"
+          ? (perform = "like")
+          : (perform = "dislike");
+
+        const data = {
+          postId: postId,
+          action: perform,
+        };
+        http.send(JSON.stringify(data));
+
+        // change class of like dislike button
+        if (perform === "like") {
+          if (e.target.classList[0] === "fas") {
+            let likeCounts =
+              e.target.parentNode.parentNode.children[4].children[0];
+            let a = e.target.parentNode;
+            a.classList.remove("dislike");
+            a.classList.add("like");
+            likeCounts.innerHTML = `${++likeCounts.innerText}`;
+          } else {
+            let likeCounts = e.target.parentNode.children[4].children[0];
+            let a = e.target;
+            a.classList.remove("dislike");
+            a.classList.add("like");
+            likeCounts.innerHTML = `${++likeCounts.innerText}`;
+          }
+        } else {
+          if (e.target.classList[0] === "fas") {
+            let likeCounts =
+              e.target.parentNode.parentNode.children[4].children[0];
+            let a = e.target.parentNode;
+            a.classList.remove("like");
+            a.classList.add("dislike");
+            likeCounts.innerHTML = `${--likeCounts.innerText}`;
+          } else {
+            let likeCounts = e.target.parentNode.children[4].children[0];
+            let a = e.target;
+            a.classList.remove("like");
+            a.classList.add("dislike");
+            likeCounts.innerHTML = `${--likeCounts.innerText}`;
+          }
+        }
+      };
+    </script>
+    <!-- post comments script -->
+    <script>
+      const postcomment = (e, postId, username) => {
+        const comment = document.querySelector(`#comment${postId}`).value;
+        let http = new XMLHttpRequest();
+        http.open("POST", "http://localhost:3001/fitcomment", true);
+        http.setRequestHeader("Content-Type", "application/json");
+        const data = { comment, postId };
+        http.send(JSON.stringify(data));
+        let newComment = `<b>${username}</b> - <span>${comment}</span><br>`;
+        const commentBody = document.querySelector(`.comments-body${postId}`);
+        commentBody.insertAdjacentHTML("beforeend", newComment);
+      };
+    </script>
+    <script>
+      var share_btn = document.querySelector(".share_btn");
+      var toggle_button = document.querySelector(".toggle_button");
+
+      share_btn.addEventListener("click", function () {
+        toggle_button.classList.toggle("active");
+      });
+    </script>
+    <!--  Jquery js file  -->
+    <script src="./js/jquery.3.4.1.js"></script>
+    <!--  Bootstrap js file  -->
+    <script src="./js/bootstrap.min.js"></script>
+    <!--  isotope js library  -->
+    <script src="./vendor/isotope/isotope.min.js"></script>
+    <!--  Magnific popup script file  -->
+    <script src="./vendor/Magnific-Popup/dist/jquery.magnific-popup.min.js"></script>
+    <!--  Owl-carousel js file  -->
+    <script src="./vendor/owl-carousel/js/owl.carousel.min.js"></script>
+    <!--  custom js file  -->
+    <script src="./js/main.js"></script>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+      integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="./js/push.min.js"></script>
+    <script src="./js/serviceWorker.min.js"></script>
+    {{!-- get chat notification script --}}
+    <script>
+      let chat = "";
+      const getChat = () => {
+        fetch("/getnewchat")
+          .then((res) => res.json())
+          .then((res) => {
+            for (let item of res) {
+              if (chat === "" || chat.message !== item.message) {
+                chat = item;
+                Push.create(item.sender, {
+                  body: item.message,
+                  icon: "./img/images/Group.png",
+                  onClick: function () {
+                    window.focus();
+                    this.close();
+                  },
+                });
+                var myAudio = new Audio("./sounds/sounds_notification.ogg");
+                myAudio.play();
+              }
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      setInterval(getChat, 2000);
+    </script>
+  </body>
+</html>

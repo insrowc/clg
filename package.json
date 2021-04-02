@@ -4,19 +4,28 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js -e html,css,js,json"
+    "start": "node server.js",
+    "dev": "nodemon server.js -e hbs,html,css,js,json"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dialogs": "^2.0.1",
+    "bcrypt": "^5.0.1",
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
+    "faker": "^5.5.2",
     "hbs": "^4.1.1",
+    "http": "0.0.1-security",
     "mongoose": "^5.11.19",
     "multer": "^1.4.2",
+    "nodemailer": "^6.5.0",
     "nodemon": "^2.0.7",
-    "path": "^0.12.7"
+    "path": "^0.12.7",
+    "pusher": "^5.0.0",
+    "socket.io": "^4.0.0",
+    "web-push": "^3.4.4"
   }
 }

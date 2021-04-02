@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>File Upload UI Design</title>
+    <link rel="stylesheet" href="/css/upload.css" />
+  </head>
+  <body>
+    <div class="wrapper">
+      <div class="title">UPLOAD NOTES</div>
+      <div class="file_upload_list">
+        <!-- <ul>
+          {{#each notesList}}
+          <li>
+            <div class="file_item">
+              <div class="format">
+                <p>{{this.ext}}</p>
+              </div>
+              <div class="file_progress">
+                <div class="file_info">
+                  <div class="file_name">{{this.originalname}}</div>
+                  <div class="file_size_wrap">
+                    <div class="file_size">{{this.size}} KB</div>
+                    <div class="file_close">X</div>
+                  </div>
+                </div>
+                <div class="progress">
+                  <div class="inner_progress" style="width: 100%"></div>
+                </div>
+              </div>
+            </div>
+          </li>
+          {{/each}}
+        </ul> -->
+      </div>
+      <form action="/upload/notes" method="POST" enctype="multipart/form-data">
+        <div class="choose_file">
+          <label id="drag-area" for="choose_file">
+            <input type="file" id="choose_file" name="notes" required />
+            <input hidden type="text" value="{{filename}}" name="fileName" />
+            <input hidden type="text" value="{{filepages}}" name="filepages" />
+            <span>Drag & Drop</span>
+            <span>OR</span>
+            <span>Choose Files</span>
+          </label>
+        </div>
+        <button style="display: inline-block; padding: 1rem 2rem" type="submit">
+          Submit
+        </button>
+      </form>
+      {{extError}}
+    </div>
+    <script>
+      window.onload = () => {
+        const dragArea = document.querySelector("#drag-area");
+        const chooseFile = document.querySelector("#choose_file");
+
+        dragArea.addEventListener("dragover", (event) => {
+          event.preventDefault();
+        });
+
+        dragArea.addEventListener("drop", (event) => {
+          event.preventDefault();
+          if(event.dataTransfer.files.length === 1) {
+            chooseFile.files = event.dataTransfer.files;
+          } else {
+            alert("Please select Only one file");
+          }
+        });
+      };
+    </script>
+  </body>
+</html>

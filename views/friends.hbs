@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="stylesheet" href="./css/clg.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.1/css/all.min.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College</title>
+    <meta name="robots" content= "index, follow">
+    <link rel="shartcut icon" type="image/x-icon" href="./img/images/Group.png"/>
+</head>
+<body>
+    <div class="wrapper">
+
+
+        <div class="profile-card js-profile-card">
+         <div class="profile-card__img">
+          <img src="./img/meerut-college-meerut_owler_20160302_223540_original.png" alt="profile" style="width: 150px; height: 150px;">
+         </div>
+      
+         <div class="profile-card__cnt js-profile-cnt">
+          <div style="text-transform: capitalize;" class="profile-card__name">{{college}}</div>
+          <div class="profile-card__txt">CCS<strong>university</strong></div>
+          <div class="profile-card-loc">
+           <span class="profile-card-loc__icon"><i class="fas fa-map-marker-alt"></i>
+           </span>
+      
+           <span class="profile-card-loc__txt">
+            meerut,UP
+           </span>
+          </div>
+         </div>
+        </div>
+       </div>
+       <div class="courses-container">
+        {{#each users}}
+            <div class="course">
+                <div class="course-preview">
+                    <a href="/friendsprofile?username={{this.userName}}">
+                        <img src="{{this.files.0.destination}}/{{this.files.0.originalname}}" alt="profile" style="width: 200px; border-radius: 50%; margin-right: 100px;"></a>
+                    <a href="#">{{this.fullName}}</a>
+                </div>
+                <div class="course-info">
+                    <h6>{{this.collegeName}}</h6>
+                    <a style="text-decoration:none;color:black" href="/friendsprofile?username={{this.userName}}">
+                        <h2>{{this.fullName}}</h2>
+                    </a>
+                    <a href="/chat?username={{this.userName}}"><button class="btn">chat</button></a>
+                </div>
+            </div>
+        {{/each}}
+</body>
+</html>
