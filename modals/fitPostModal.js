@@ -35,7 +35,8 @@ const fitPostSchema = new mongoose.Schema({
   },
   expireAt: {
     type: Date,
-    default: new Date(new Date().getDay()+10000*10000)
+    default: new Date(new Date().getTime() + 60 * 60 * 24 * 1000),
+    expires: "1m"
   },
 });
 

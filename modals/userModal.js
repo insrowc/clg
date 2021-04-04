@@ -22,6 +22,7 @@ const usersSchema = new mongoose.Schema(
       trim: true,
       lowercase: true,
     },
+    notifications: [{}],
     course: String,
     startYear: Number,
     endYear: Number,
@@ -51,8 +52,8 @@ const usersSchema = new mongoose.Schema(
     },
     role: {
       type: String,
-      enum: ["admin","user"],
-      default: "user"
+      enum: ["admin", "user"],
+      default: "user",
     },
     blocks: [],
     blockedby: [],
@@ -70,4 +71,4 @@ usersSchema.pre("save", async function (next) {
 
 const UserModal = new mongoose.model("users", usersSchema);
 
-module.exports =  UserModal ;
+module.exports = UserModal;
