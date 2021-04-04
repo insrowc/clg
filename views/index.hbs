@@ -77,9 +77,8 @@
         position: absolute;
         top: -10px;
         right: -7px;
-        color: blue;
+        color: white;
       }
-      
     </style>
   </head>
   <body>
@@ -89,6 +88,16 @@
         <i class="fa fa-bell"><span class="count">0</span></i>
       </div>
     </a>
+    <script>
+      const getNotificationLength = () => {
+        fetch("/getnotifylength")
+          .then((res) => res.json())
+          .then((res) => {
+            document.querySelector(".notification .count").innerHTML = res.length;
+          });
+      };
+      setInterval(getNotificationLength, 1000);
+    </script>
     {{!-- facebook redirect when sharing post --}}
     <div id="fb-root"></div>
     <script
@@ -227,7 +236,7 @@
 
             <div class="col-lg-6 col-md-12 banner-image">
               {{!-------------------------- one post ------------------------- --}}
-              {{!---- fits is array of object #each iterate array to render all posts ------}}
+              {{!---- fits is array of objects (#each) iterate array to render all posts ------}}
 
               {{#each fits}}
               <div id="{{ this._id }}">
@@ -249,6 +258,8 @@
                 <p class="para">
                   {{ this.message }}
                 </p>
+
+                {{!-- likes count button --}}
                 <button
                   class="likes-count-btn btn-light"
                   type="button"
@@ -309,14 +320,10 @@
                     </div>
                   </div>
                 </div>
-                {{!-- if return anchor tag written below this statement --}}
-                {{#likeordislike this.likes this._id}}{{/likeordislike}}
                 <!-- likes Button trigger modal -->
-                <a
-                  class="btn dislike"
-                  onclick="likeDislike(event,'{{ this._id }}')"
-                  href="#"
-                >
+                {{#likeordislike this.likes this._id}}
+                {{!-- likeordislike returns achor tag with like or dislike class from server --}}
+                {{/likeordislike}}
                   <i class="fas fa-thumbs-up"></i>
                 </a>
                 <!-- comments Button trigger modal -->
@@ -383,6 +390,7 @@
                               />
                             </svg> </a
                           ><br />
+                          {{!-- share on twitter --}}
                           <a
                             target="_blank"
                             href="https://twitter.com/intent/tweet?url=http%3A%2F%2Flocalhost%3A3001%2F%23{{
@@ -402,6 +410,7 @@
                               />
                             </svg> </a
                           ><br />
+                          {{!-- share on whatsapp --}}
                           <a
                             target="_blank"
                             href="whatsapp://send?text={{ this._id }}"
@@ -478,9 +487,7 @@
                           class="form-control"
                         />
                         <button
-                          onclick="postcomment(event, '{{ this._id }}', '{{
-                            this.username
-                          }}')"
+                          onclick="postcomment(event, '{{ this._id }}')"
                           class="btn btn-primary"
                         >
                           <svg
@@ -546,6 +553,7 @@
     </footer>
     <!--  ======================= End Footer Area ================================ -->
     <!--  ======================= Box Area ================================ -->
+    {{!-- sharing like copy script --}}
     <script>
       const copyLink = (selector) => {
         var copyText = document.querySelector(selector);
@@ -616,16 +624,21 @@
     </script>
     <!-- post comments script -->
     <script>
-      const postcomment = (e, postId, username) => {
+      const postcomment = (e, postId) => {
         const comment = document.querySelector(`#comment${postId}`).value;
         let http = new XMLHttpRequest();
         http.open("POST", "http://localhost:3001/fitcomment", true);
         http.setRequestHeader("Content-Type", "application/json");
         const data = { comment, postId };
         http.send(JSON.stringify(data));
-        let newComment = `<b>${username}</b> - <span>${comment}</span><br>`;
-        const commentBody = document.querySelector(`.comments-body${postId}`);
-        commentBody.insertAdjacentHTML("beforeend", newComment);
+        fetch("/getcurrentuser").then(res=>res.json())
+        .then(res => {
+          if(res){
+            let newComment = `<b>${res.userName}</b> - <span>${comment}</span><br>`;
+            const commentBody = document.querySelector(`.comments-body${postId}`);
+            commentBody.insertAdjacentHTML("beforeend", newComment);
+          }
+        });
       };
     </script>
     <script>

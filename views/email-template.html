@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+      a {
+        text-decoration: none;
+        background-color: #fd5f03e0;
+        display: inline-block;
+        color: white !important;
+        font-size: 1.3rem;
+        padding: 1rem 2.5rem;
+        border-radius: 5px;
+      }
+      .wrapper {
+        text-align: center;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+      }
+      .logo {
+        width: 100px;
+        margin: auto;
+      }
+      .wrapper img {
+        max-width: 200px;
+        object-fit: contain;
+        display: inline-block;
+        margin: auto;
+      }
+      h2,
+      h3,
+      p {
+        margin: 2rem 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrapper">
+      <h2>Welcome to the Family</h2>
+      <h3>Verify Your email</h3>
+      <p>You will need to verify your email to complete your registeration</p>
+      <br>
+      <a href="http://localhost:3001/emailisverified?email={{emailtoverify}}"
+        >Verify Your Account</a
+      >
+    </div>
+  </body>
+</html>

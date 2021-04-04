@@ -13,10 +13,23 @@ const ChatModal = require("./modals/chatModal");
 const FitModal = require("./modals/fitPostModal");
 const auth = require("./auth/auth");
 const { notes, users, fits, chats } = require("./multer/multer");
-const transporter = require("./mailconfig/mail");
+// const transporter = require("./mailconfig/mail");
 const { bytesToKB } = require("./functions/functions");
 const PORT = process.env.PORT || 8000;
 const DOMAIN = process.env.DOMAIN;
+const nodemailer = require("nodemailer");
+const fs = require("fs");
+
+var readHTMLFile = function (path, callback) {
+  fs.readFile(path, { encoding: "utf-8" }, function (err, html) {
+    if (err) {
+      throw err;
+      callback(err);
+    } else {
+      callback(null, html);
+    }
+  });
+};
 
 app.listen(PORT, () => {
   console.log("Listening at " + PORT);
@@ -46,11 +59,11 @@ mongoose.connect(
 hbs.registerHelper(
   "containsparam",
   function (mimetype, destination, originalname) {
-    if (mimetype && mimetype.includes("video")) {
+    if (mimetype && mimetype.includes("video"))
       return `<video src='${destination}/${originalname}' class='img-fluid1' controls></video>`;
-    } else {
+    else if (mimetype === undefined) return `<br/>`;
+    else
       return `<img src='${destination}/${originalname}' alt='banner-img' class='img-fluid1'>`;
-    }
   }
 );
 
@@ -67,7 +80,7 @@ app.get("/", auth, async (req, res) => {
   const userId = req.cookies["user"];
   const user = await UserModal.findById(userId);
   hbs.registerHelper("likeordislike", function (likesArr, id) {
-    if (likesArr.includes(user.userName)) {
+    if (likesArr.includes(user?.userName)) {
       return `<a class="btn like" onclick="likeDislike(event,'${id}')">`;
     } else {
       return `<a class="btn dislike" onclick="likeDislike(event,'${id}')">`;
@@ -166,7 +179,7 @@ app.post("/uploadnotes", auth, (req, res) => {
   const { filename, filepages } = req.body;
   res.render("upload", { filename: filename, filepages: filepages });
 });
-app.post("/upload/notes", auth, notes.single("notes"), (req, res) => {
+app.post("/upload/notes", auth, notes.single("notes"), async (req, res) => {
   try {
     const { fileName, filepages } = req.body;
 
@@ -185,14 +198,15 @@ app.post("/upload/notes", auth, notes.single("notes"), (req, res) => {
       filePages,
     } = req.file;
 
-    const user = "loggedinuser";
+    const loggedInUserId = req.cookies["user"];
+    const user = await UserModal.findById(loggedInUserId);
     const date = new Date();
     const uploadedAt = `${date.getUTCDate()}/${
       date.getUTCMonth() + 1
     }/${date.getUTCFullYear()} ${date.getHours()}:${date.getMinutes()}`;
 
     const notes = new NotesModal({
-      user,
+      user: user.userName,
       fieldname,
       originalname,
       encoding,
@@ -205,8 +219,23 @@ app.post("/upload/notes", auth, notes.single("notes"), (req, res) => {
       filePages,
     });
 
-    notes.save((err) => {
+    notes.save((err, note) => {
       if (err) console.log("Something wrong while uploading your post");
+      const college = req.cookies["college"];
+      UserModal.find({ collegeName: college }).exec((err, res) => {
+        for (let user of res) {
+          user.notifications = [
+            ...user.notifications,
+            {
+              name: note.user,
+              type: "notes",
+              message: `uploaded notes (${note.originalname})`,
+              src: `${user.files[0]?.destination}/${user.files[0]?.originalname}`,
+            },
+          ];
+          user.save();
+        }
+      });
       res.redirect("/studynotes");
     });
   } catch (err) {
@@ -340,27 +369,57 @@ app.post("/signup", users.array("userid"), async (req, res) => {
 
       const userRegistered = await newUser.save();
 
-      const verifyemailhtml = `<a style='padding:10px 25px: text-decoration:none; background: lightgray; color: #333;' href='${DOMAIN}${PORT}/emailisverified?email=${email}'>Verify Email</a>`;
+      let senderEmail, senderPass;
 
-      const mail = {
-        from: process.env.SENDER_EMAIL,
-        to: email,
-        subject: "VFindFit Email verification",
-        html: verifyemailhtml,
-      };
+      if (collegename.toLowerCase() === "MEERUT COLLEGE MEERUT".toLowerCase()) {
+        senderEmail = process.env.SENDER_EMAIL_MEERUT_COLLEGE;
+        senderPass = process.env.PASS_MEERUT_COLLEGE;
+      } else {
+        senderEmail = process.env.SENDER_EMAIL_NOREPLY;
+        senderPass = process.env.PASS_NOREPLY;
+      }
 
-      transporter.sendMail(mail, function (err, success) {
-        if (err) {
-          if (err.errno && err.errno == -3008) {
-            res.render("signup", { message: "Connection Problem" });
-          } else {
-            res.render("signup", { message: "Something Wrong Try again" });
-          }
-          console.log(err);
-        } else {
-          res.redirect("/needtoverifyemail");
-        }
+      var transporter = nodemailer.createTransport({
+        host: "smtp.gmail.com",
+        port: 587,
+        secure: false,
+        requireTLS: true,
+        auth: {
+          user: senderEmail,
+          pass: senderPass,
+        },
       });
+
+      readHTMLFile(
+        __dirname + "/views/email-template.html",
+        function (err, html) {
+          var template = hbs.compile(html);
+          var replacements = {
+            emailtoverify: email,
+          };
+          var htmlToSend = template(replacements);
+
+          const mailOptions = {
+            from: senderEmail,
+            to: email,
+            subject: "VFindFit Email verification",
+            html: htmlToSend,
+          };
+
+          transporter.sendMail(mailOptions, function (err, success) {
+            if (err) {
+              if (err.errno && err.errno == -3008) {
+                res.render("signup", { message: "Connection Problem" });
+              } else {
+                res.render("signup", { message: "Something Wrong Try again" });
+              }
+              console.log(err);
+            } else {
+              res.redirect("/needtoverifyemail");
+            }
+          });
+        }
+      );
     } else {
       res.render("signup", { message: "Password does not match" });
     }
@@ -374,12 +433,39 @@ app.post("/signup", users.array("userid"), async (req, res) => {
       console.log(error);
       // if user is not verified send verification not error
       if (existingUser[0] && !existingUser[0].verified) {
-        console.log("not verified");
+        // console.log("not verified");
 
-        const verifyemailhtml = `<a style='padding:10px 25px: text-decoration:none; background: lightgray; color: #333;' href='${DOMAIN}${PORT}/emailisverified?email=${req.body.email}'>Verify Email</a>`;
+        const verifyemailhtml = `
+          <a style="text-decoration:none; background-color: red; color:white;" href='${DOMAIN}${PORT}/emailisverified?email=${req.body.email}'>
+            Verify Email
+          </a>`;
+
+        let senderEmail, senderPass;
+
+        if (
+          req.body.collegename.toLowerCase() ===
+          "MEERUT COLLEGE MEERUT".toLowerCase()
+        ) {
+          senderEmail = process.env.SENDER_EMAIL_MEERUT_COLLEGE;
+          senderPass = process.env.PASS_NOREPLY;
+        } else {
+          senderEmail = process.env.SENDER_EMAIL_NOREPLY;
+          senderPass = process.env.PASS_NOREPLY;
+        }
+
+        var transporter = nodemailer.createTransport({
+          host: "smtp.gmail.com",
+          port: 587,
+          secure: false,
+          requireTLS: true,
+          auth: {
+            user: senderEmail,
+            pass: senderPass,
+          },
+        });
 
         const mail = {
-          from: process.env.SENDER_EMAIL,
+          from: senderEmail,
           to: req.body.email,
           subject: "VFindFit Email verification",
           html: verifyemailhtml,
@@ -391,6 +477,7 @@ app.post("/signup", users.array("userid"), async (req, res) => {
               //connection error
               res.render("signup", { message: "Connection Problem" });
             } else {
+              console.log(err);
               res.render("signup", { message: "Something Wrong Try again" });
             }
             // console.log(err);
@@ -674,7 +761,31 @@ app.post("/likedislike", auth, async (req, res) => {
     FitModal.findById(postId, (err, fit) => {
       fit.likes = [...fit.likes, user.userName];
       fit.likescount = fit.likes.length;
-      fit.save();
+      fit.save((err, fit) => {
+        // save who liked the post
+        if (fit) {
+          UserModal.findById(fit.userid, (err, user) => {
+            // find the fit owner
+            if (user) {
+              UserModal.findById(req.cookies["user"], (err, whoLiked) => {
+                /// find who liked the fit
+                if (whoLiked) {
+                  user.notifications = [
+                    ...user.notifications,
+                    {
+                      name: whoLiked.userName,
+                      type: "like",
+                      message: "Liked your Fit",
+                      src: `${whoLiked.files[0].destination}/${whoLiked.files[0].originalname}`,
+                    },
+                  ];
+                  user.save();
+                }
+              });
+            }
+          });
+        }
+      });
     });
   } else {
     FitModal.findById(postId, (err, fit) => {
@@ -691,7 +802,35 @@ app.post("/fitcomment", auth, async (req, res) => {
   FitModal.findById(postId, (err, fit) => {
     fit.comments = [...fit.comments, { username: user.userName, comment }];
     fit.commentsCount = fit.comments.length;
-    fit.save();
+    fit.save((err, fit) => {
+      if (fit) {
+        UserModal.findById(fit.userid, (err, user) => {
+          // find the fit owner
+          if (user) {
+            UserModal.findById(req.cookies["user"], (err, whoComment) => {
+              /// find who liked the fit
+              if (whoComment) {
+                user.notifications = [
+                  ...user.notifications,
+                  {
+                    name: whoComment.userName,
+                    type: "comment",
+                    message: "Comment on your Fit",
+                    src: `${whoComment.files[0].destination}/${whoComment.files[0].originalname}`,
+                  },
+                ];
+                user.save();
+              }
+            });
+          }
+        });
+      }
+    });
+  });
+});
+app.get("/getcurrentuser", auth, (req, res) => {
+  UserModal.findById(req.cookies["user"], (err, currentUser) => {
+    res.send(currentUser);
   });
 });
 app.get("/jumptoothercolleges", auth, (req, res) => {
@@ -837,22 +976,20 @@ app.get("/getnewchat", auth, (req, res) => {
     }
   });
 });
-app.get("/notifications", auth, (req, res) => {
+app.get("/notifications", auth, async (req, res) => {
   res.render("notifications");
 });
 app.get("/getnotifications", auth, async (req, res) => {
-  const loggedInUserId = req.cookies["user"];
-  let notifications = { likes: [] };
-  const fits = await FitModal.find({ userid: loggedInUserId }).limit(10);
-
-  for (let item of fits) {
-    if (item.likes.length) {
-      notifications.likes = [
-        ...notifications.likes,
-        item.likes[item.likes.length - 1],
-      ];
-    }
-  }
-  console.log(notifications);
-  res.send(notifications);
+  const user = await UserModal.findById(req.cookies["user"]);
+  res.send(user.notifications);
+});
+app.get("/getnotifylength", auth, async (req, res) => {
+  const user = await UserModal.findById(req.cookies["user"]);
+  res.send({ length: user.notifications.length });
+});
+app.get("/notificationread", auth, (req, res) => {
+  UserModal.findById(req.cookies["user"], (err, user) => {
+    user.notifications = [];
+    user.save();
+  });
 });

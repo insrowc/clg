@@ -50,6 +50,20 @@
       .notification img {
         width: 100%;
       }
+      .mark-as-read {
+        display: block;
+        width: 50%;
+        margin: 1rem auto;
+        cursor: pointer;
+        color: white;
+        min-width: 200px;
+        background-color: #fd5f0399;
+        border: 1px solid goldenrod;
+        outline: none;
+        padding: 0.5rem 0;
+        letter-spacing: 2px;
+        font: 1.1rem bold;
+      }
     </style>
   </head>
   <body>
@@ -61,36 +75,50 @@
         <p>college name</p>
       </div>
     </div>
+    <!-- mark all as read -->
+    <button class="mark-as-read" onclick="notificationsRead()">Mark all as Read</button>
+    <!-- mark all as read script -->
+    <script>
+      const notificationsRead = () =>{
+        fetch("/notificationread");
+      }
+    </script>
     <!-- all notifiction -->
     <div class="all-notification"></div>
     <!-- get notificatin script -->
     <script>
-      fetch("/getnotifications")
-        .then((res) => res.json())
-        .then((res) => {
-          if (res) {
-            res.likes.map((username) => {
-              let notification = `
-                    <div class="notification">
-                        <div class="img">
+      const allNotifications = document.querySelector(".all-notification");
 
-                        </div>
+      const getNotify = () => {
+        fetch("/getnotifications")
+          .then((res) => res.json())
+          .then((res) => {
+            if (res) {
+              allNotifications.innerHTML = "";
+              res.map((item) => {
+                let notification = `
+                    <div class="notification">
+                        <div class="img">`;
+                item.src !== ""
+                  ? (notification += `<img src="${item.src}"/>`)
+                  : (notification += ``);
+                notification += `</div>
                         <div class="content">
                             <p>
-                               <b>${username}</b> likes your Fit
+                               <b>${item.name}</b> ${item.message}
                             </p>
                         </div>
                     </div>
                     `;
-              document
-                .querySelector(".all-notification")
-                .insertAdjacentHTML("beforebegin", notification);
-            });
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
+                allNotifications.innerHTML += notification;
+              });
+            }
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      };
+      setInterval(getNotify, 1000);
     </script>
   </body>
 </html>
